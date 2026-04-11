@@ -1,0 +1,53 @@
+# ---------------------- Variables ---------------------------------------------
+
+# Executable
+NAME = megaphone
+
+# Directories
+OBJS_DIR = objs
+
+# SRCs
+SRCS = megaphone.cpp
+
+# OBJs
+OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS:%.cpp=%.o))
+
+# Compiling Flags
+FLAGS = -Wall -Werror -Wextra -std=c++98
+
+# Colors
+GREEN         = \033[0;32m
+RED           = \033[0;31m
+YELLOW        = \033[0;33m
+CYAN          = \033[0;36m
+RESET         = \033[0m
+
+
+# ---------------------- Default -----------------------------------------------
+
+all: $(NAME)
+
+# ---------------------- Linking -----------------------------------------------
+$(NAME): $(OBJS)
+	@echo "$(YELLOW)Linking Object Files to make $(NAME)...$(RESET)"
+	@c++ $(FLAGS) $(OBJS) -o $(NAME)
+	@echo "$(GREEN)Done! Execute ./$(NAME)$(RESET)"
+
+# ---------------------- Compiling ---------------------------------------------
+$(OBJS_DIR)/%.o: %.cpp
+	@mkdir -p $(OBJS_DIR)
+	@echo "$(CYAN)Compiling $<...$(RESET)"
+	@c++ $(FLAGS) -c $< -o $@
+
+# ---------------------- Cleaning ----------------------------------------------
+clean:
+	@echo "$(CYAN)Cleaning Object Files...$(RESET)"
+	@rm -rf $(OBJS_DIR)
+	@echo "$(GREEN)Done!$(RESET)"
+
+fclean: clean
+	@echo "$(RED)Removing executable$(RESET)"
+	@rm -f $(NAME)
+	@echo "$(GREEN)Done!$(RESET)"
+
+re: fclean all
