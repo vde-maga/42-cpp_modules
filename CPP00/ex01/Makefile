@@ -1,16 +1,18 @@
 # ---------------------- Variables ---------------------------------------------
 
 # Executable
-NAME = megaphone
+NAME = phonebook
 
 # Directories
 OBJS_DIR = objs
 
 # SRCs
-SRCS = megaphone.cpp
+SRCS =	srcs/Contact.cpp \
+		srcs/PhoneBook.cpp \
+		srcs/main.cpp
 
 # OBJs
-OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS:%.cpp=%.o))
+OBJS = $(patsubst srcs/%.cpp,$(OBJS_DIR)/%.o,$(SRCS))
 
 # Compiling Flags
 FLAGS = -Wall -Werror -Wextra -std=c++98
@@ -34,7 +36,7 @@ $(NAME): $(OBJS)
 	@echo "$(GREEN)Done! Execute ./$(NAME)$(RESET)"
 
 # ---------------------- Compiling ---------------------------------------------
-$(OBJS_DIR)/%.o: %.cpp
+$(OBJS_DIR)/%.o: srcs/%.cpp
 	@mkdir -p $(OBJS_DIR)
 	@echo "$(CYAN)Compiling $<...$(RESET)"
 	@c++ $(FLAGS) -c $< -o $@
@@ -53,6 +55,6 @@ fclean: clean
 re: fclean all
 
 run: all clean
-	./$(NAME) "Deadlock" "Pocket"
+	./$(NAME)
 
 .PHONY: all clean fclean re run
