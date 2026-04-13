@@ -1,26 +1,21 @@
-#include <ctype.h>
+#include <cctype>
+#include <string>
 #include <iostream>
 
 int	main(int argc, char **argv)
 {
-	int i;
-	int j;
-
 	if (argc == 1)
 	{
 		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << std::endl;
-		return (1);
+		return (0);
 	}
-	i = 1;
-	while (i < argc)
+	for (int i = 1; i < argc; ++i)
 	{
-		j = 0;
-		while (argv[i][j])
-		{
-			std::cout << (char)toupper(argv[i][j]);
-			j++;
-		}
-		i++;
+		if (i > 1)
+			std::cout << ' ';
+		std::string str(argv[i]);
+		for (size_t j = 0; j < str.length(); ++j)
+			std::cout << static_cast<char>(std::toupper(argv[i][j]));
 	}
 	std::cout << std::endl;
 	return (0);
