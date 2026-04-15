@@ -1,13 +1,10 @@
-#include "../includes/Colors.hpp"
-#include "../includes/PhoneBook.hpp"
-#include <cstdio> // para clearerr
+#include "Colors.hpp"
+#include "PhoneBook.hpp"
+#include <cstdio>
 #include <cstdlib>
 #include <iomanip>
 #include <iostream>
 
-// --- Funções Auxiliares de Input (Estáticas para não poluir o .hpp) ---
-
-// Lê uma linha, garante que não está vazia e protege contra EOF (Ctrl+D)
 static std::string getNonEmptyInput(const std::string &prompt)
 {
 	std::string input;
@@ -22,7 +19,6 @@ static std::string getNonEmptyInput(const std::string &prompt)
 				clearerr(stdin);
 				std::cout << std::endl;
 				continue ;
-					// Tenta ler novamente (comum na 42 quando o Moulinette envia EOF)
 			}
 			std::cin.clear();
 		}
@@ -32,7 +28,6 @@ static std::string getNonEmptyInput(const std::string &prompt)
 	}
 }
 
-// Lê e valida o número de telefone
 static std::string getPhoneNumberInput()
 {
 	std::string input;
@@ -44,8 +39,6 @@ static std::string getPhoneNumberInput()
 		std::cout << RED << "Error: Phone number must only contain digits." << RESET << std::endl;
 	}
 }
-
-// --- Métodos da Classe PhoneBook ---
 
 PhoneBook::PhoneBook() : _count(0)
 {
@@ -79,8 +72,6 @@ void PhoneBook::addContact()
 	newContact.setNickname(getNonEmptyInput("Nickname: "));
 	newContact.setPhoneNumber(getPhoneNumberInput());
 	newContact.setSecret(getNonEmptyInput("Darkest Secret: "));
-	// Lógica Circular (Ring Buffer)
-	// Se _count for 8, substitui o índice 0 (o mais antigo). Se 9, o índice 1, etc.
 	insertIndex = this->_count % 8;
 	this->_contacts[insertIndex] = newContact;
 	this->_count++;
@@ -89,7 +80,6 @@ void PhoneBook::addContact()
 
 void PhoneBook::searchContact()
 {
-	// Calcula quantos contactos estão ativos no máximo (limitado a 8)
 	size_t activeCount = (this->_count > 8) ? 8 : this->_count;
 
 	if (activeCount == 0)
@@ -110,7 +100,6 @@ void PhoneBook::searchContact()
 		std::cout << std::endl;
 	}
 
-	// Obtenção e validação do índice
 	std::string input;
 	int index = -1;
 	while (true)
@@ -130,7 +119,6 @@ void PhoneBook::searchContact()
 			&& input.find_first_not_of("0123456789") == std::string::npos)
 		{
 			index = std::atoi(input.c_str());
-			// Protege contra números negativos (atoi("-1") falhava no size_t) e fora do limite
 			if (index >= 0 && static_cast<size_t>(index) < activeCount)
 				break ;
 		}

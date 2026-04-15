@@ -1,9 +1,8 @@
-#include "../includes/Colors.hpp"
-#include "../includes/PhoneBook.hpp"
+#include "Colors.hpp"
+#include "PhoneBook.hpp"
 #include <cstdio>
 #include <iostream>
 
-// C++ idiomático: usa bool em vez de int para avaliações lógicas
 bool	isInputValid(const std::string &input)
 {
 	return (input == "ADD" || input == "SEARCH" || input == "EXIT"
@@ -18,7 +17,6 @@ std::string getUserInput(void)
 		std::cout << GREEN << "PhoneBook> " << RESET << std::flush;
 		if (!std::getline(std::cin, input))
 		{
-			// Prevenção contra EOF infinito (Ctrl+D)
 			if (std::cin.eof())
 			{
 				std::cin.clear();

@@ -1,21 +1,20 @@
 # ---------------------- Variables ---------------------------------------------
 
 # Executable
-NAME = phonebook
+NAME = account
 
 # Directories
 OBJS_DIR = objs
 
 # SRCs
-SRCS =	srcs/Contact.cpp \
-		srcs/PhoneBook.cpp \
-		srcs/main.cpp
+SRCS =	tests.cpp \
+	Account.cpp
 
 # OBJs
 OBJS = $(patsubst srcs/%.cpp,$(OBJS_DIR)/%.o,$(SRCS))
 
 # Compiling Flags
-FLAGS = -Wall -Werror -Wextra -std=c++98 -I./includes
+FLAGS = -Wall -Werror -Wextra -std=c++98
 
 # Colors
 GREEN         = \033[0;32m
