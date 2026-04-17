@@ -1,7 +1,7 @@
 # ---------------------- Variables ---------------------------------------------
 
 # Executable
-NAME = zombies
+NAME = BraiiiiiiinnnzzzZ
 
 # Directories
 OBJS_DIR = objs
