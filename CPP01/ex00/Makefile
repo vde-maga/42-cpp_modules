@@ -1,20 +1,23 @@
 # ---------------------- Variables ---------------------------------------------
 
 # Executable
-NAME = account
+NAME = zombies
 
 # Directories
 OBJS_DIR = objs
+SRCSDIR = srcs
+INCDIR = includes
 
 # SRCs
-SRCS =	tests.cpp \
-	Account.cpp
+SRCS = $(shell find $(SRCDIR) -name '*.cpp' -print)
 
 # OBJs
 OBJS = $(patsubst srcs/%.cpp,$(OBJS_DIR)/%.o,$(SRCS))
 
 # Compiling Flags
-FLAGS = -Wall -Werror -Wextra -std=c++98 -I./includes
+FLAGS = -Wall -Werror -Wextra -std=c++98 -g -I$(INCDIR)
+VALGRIND_FLAGS = --leak-check=full --show-leak-kinds=all --track-origins=yes
+
 
 # Colors
 GREEN         = \033[0;32m
@@ -56,4 +59,9 @@ re: fclean all
 run: all clean
 	./$(NAME)
 
-.PHONY: all clean fclean re run
+valgrind: $(NAME)
+	@echo "$(YELLOW)Running $(NAME) under Valgrind...$(RESET)"
+	@valgrind $(VALGRIND_FLAGS) ./$(NAME)
+	@echo "$(GREEN)Valgrind finished$(RESET)"
+
+.PHONY: all clean fclean re run valgrind
