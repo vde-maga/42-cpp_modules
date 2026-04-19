@@ -1,4 +1,4 @@
-# 📘 42 C++ Modules
+# 42 C++ Modules
 
 This repository contains my solutions to the 42 C++ modules (00 to 09). Each file demonstrates a specific concept or set of concepts from C++ (C++98 to C++ canonical form), following the school's progression.
 
@@ -37,7 +37,7 @@ This repository contains my solutions to the 42 C++ modules (00 to 09). Each fil
 
 ---
 
-## 📦 Module 03 — Inheritance & Polymorphism
+## Module 03 — Inheritance & Polymorphism
 | File                    | Concept                                       |
 |-------------------------|-----------------------------------------------|
 | ex00                    | Orthodox Canonical Form                       |
