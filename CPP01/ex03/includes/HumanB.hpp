@@ -1,17 +1,19 @@
 #ifndef HUMANB_HPP
 # define HUMANB_HPP
 
-# include "Weapon.h"
+# include "Weapon.hpp"
 
-class	HumanB
+class HumanB
 {
-	private:
-		std::string	_name;
-		Weapon	*_weapon;
-	public:
-		HumanB(std::string name);
-		void	setWeapon(Weapon &weapon);
-		void	attack(void);
+  private:
+	std::string _name;
+	Weapon *_weapon; // Ponteiro: HumanB pode não ter arma e pode trocá-la.
+
+  public:
+	HumanB(const std::string &name);
+
+	void setWeapon(Weapon &weapon);
+	void attack(void) const;
 };
 
 #endif
