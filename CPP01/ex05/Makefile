@@ -1,7 +1,7 @@
 # ---------------------- Variables ---------------------------------------------
 
 # Executable
-NAME = Unnecessary_violence
+NAME = Harl_2.0
 
 # Directories
 OBJS_DIR = objs
