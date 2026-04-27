@@ -1,5 +1,9 @@
 #include "Contact.hpp"
 
+Contact::Contact()
+{
+}
+
 // Setters
 void Contact::setFirstName(const std::string &str)
 {

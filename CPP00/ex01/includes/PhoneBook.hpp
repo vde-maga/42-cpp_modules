@@ -6,17 +6,16 @@
 class PhoneBook
 {
   private:
-    size_t		_count;
-    Contact		_contacts[8];
-
-    std::string	_getFormattedField(const std::string &field) const;
-    void		_displayContactInfo(const Contact &contact) const;
+	static const size_t MAX_CONTACTS = 8;
+	size_t _count;
+	Contact _contacts[8];
 
   public:
-    PhoneBook();
+	PhoneBook();
 
-    void addContact();
-    void searchContact();
+	void addContact(const Contact &contact);
+	const Contact *getContact(size_t index) const;
+	size_t getCount() const;
 };
 
 #endif
