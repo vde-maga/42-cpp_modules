@@ -7,25 +7,29 @@
 ClapTrap::ClapTrap(void) : name_("Default"), hitPoints_(10), energyPoints_(10),
 	attackDamage_(0)
 {
-	std::cout << GREEN UNDERLINE << "ClapTrap " << name_ << " default constructor called" << RESET << std::endl;
+	std::cout << GREEN UNDERLINE << "ClapTrap " << name_ <<
+		" default constructor called" << RESET << std::endl;
 }
 
 ClapTrap::ClapTrap(const std::string &name) : name_(name), hitPoints_(10),
 	energyPoints_(10), attackDamage_(0)
 {
-	std::cout << GREEN UNDERLINE << "ClapTrap " << name_ << " parameterized constructor called" << RESET << std::endl;
+	std::cout << GREEN UNDERLINE << "ClapTrap " << name_ <<
+		" parameterized constructor called" << RESET << std::endl;
 }
 
 ClapTrap::ClapTrap(const ClapTrap &other) : name_(other.name_),
 	hitPoints_(other.hitPoints_), energyPoints_(other.energyPoints_),
 	attackDamage_(other.attackDamage_)
 {
-	std::cout << GREEN UNDERLINE << "ClapTrap " << name_ << " copy constructor called" << RESET << std::endl;
+	std::cout << GREEN UNDERLINE << "ClapTrap " << name_ <<
+		" copy constructor called" << RESET << std::endl;
 }
 
 ClapTrap &ClapTrap::operator=(const ClapTrap &other)
 {
-	std::cout << GREEN UNDERLINE << "ClapTrap " << name_ << " assigment operator called" << RESET << std::endl;
+	std::cout << GREEN UNDERLINE << "ClapTrap " << name_ <<
+		" assigment operator called" << RESET << std::endl;
 	if (this != &other)
 	{
 		name_ = other.name_;
@@ -38,7 +42,8 @@ ClapTrap &ClapTrap::operator=(const ClapTrap &other)
 
 ClapTrap::~ClapTrap(void)
 {
-	std::cout << GREEN UNDERLINE << "ClapTrap " << name_ << " destructor called" << RESET << std::endl;
+	std::cout << GREEN UNDERLINE << "ClapTrap " << name_ <<
+		" destructor called" << RESET << std::endl;
 }
 
 // ---------------------- Public Methods ---------------------------------------
