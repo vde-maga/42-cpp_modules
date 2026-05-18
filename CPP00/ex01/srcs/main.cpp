@@ -104,11 +104,11 @@ static bool promptSearchContact(PhoneBook &phoneBook)
 	}
 
 	std::cout << MAGENTA << "\n|     Index|First Name| Last Name|  Nickname|"
-		<< RESET << std::endl;
+		<< std::endl;
 	std::cout << MAGENTA << "|----------|----------|----------|----------|"
-		<< RESET << std::endl;
+		<< std::endl;
 
-	for (size_t i = 0; i < count; i++)
+	for (size_t i = 0; i < count; ++i)
 	{
 		const Contact* c = phoneBook.getContact(i);
 		std::cout << "|" << std::right << std::setw(10) << i << "|";
