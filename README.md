@@ -6,6 +6,8 @@ This repository contains my solutions to the 42 C++ modules (00 to 09). Each fil
 
 ## Module 00 — Basics & Syntax
 
+![CPP00 Evaluation](/screenshots/CPP00.png)
+
 | File              | Concept                                                                         |
 |-------------------|---------------------------------------------------------------------------------|
 | ex00              | Command-line arguments, basic output                                            |
