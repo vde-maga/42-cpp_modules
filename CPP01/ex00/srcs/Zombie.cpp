@@ -10,12 +10,12 @@ Zombie::~Zombie(void)
 
 void	Zombie::setName(std::string name)
 {
-	this->name = name;
+	this->_name = name;
 }
 
 const std::string&	Zombie::getName(void) const
 {
-	return (this->name);
+	return (this->_name);
 }
 
 void	Zombie::announce( void )
