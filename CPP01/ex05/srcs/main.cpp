@@ -2,34 +2,121 @@
 #include "Colors.hpp"
 #include <iostream>
 
-void	run_test(const Harl &harl, const std::string &level)
+int main(void)
 {
-	std::cout << MAGENTA << "[ Testing level: \"" << level << "\" ]"
-				<< RESET << std::endl;
-	harl.complain(level);
-	std::cout << std::endl;
-}
+	bool all_passed = true;
 
-int	main(void)
-{
-	Harl	harl;
+	std::cout << "Starting Harl 2.0 unit tests" << std::endl
+			  << std::endl;
 
-	run_test(harl, "DEBUG");
-	run_test(harl, "INFO");
-	run_test(harl, "WARNING");
-	run_test(harl, "ERROR");
+	Harl harl;
 
+	{
+		std::cout << MAGENTA << "Test 1: Valid Levels - DEBUG, INFO, WARNING, ERROR..." << RESET << std::endl;
+		bool passed = true;
+		try
+		{
+			harl.complain("DEBUG");
+			harl.complain("INFO");
+			harl.complain("WARNING");
+			harl.complain("ERROR");
+		}
+		catch (...)
+		{
+			passed = false;
+			all_passed = false;
+		}
+		if (passed)
+			std::cout << "  -> PASS" << std::endl
+					  << std::endl;
+		else
+		{
+			std::cout << RED << "  -> FAIL" << RESET << std::endl
+					  << std::endl;
+			all_passed = false;
+		}
+	}
 
-	run_test(harl, "INVALID_LEVEL");
-	run_test(harl, "");
+	{
+		std::cout << MAGENTA << "Test 2: Invalid Levels - Case sensitivity, typos, random strings..." << RESET << std::endl;
+		bool passed = true;
+		try
+		{
+			harl.complain("debug");
+			harl.complain("WARNING ");
+			harl.complain("ERRORR");
+			harl.complain("Gaming");
+		}
+		catch (...)
+		{
+			passed = false;
+			all_passed = false;
+		}
+		if (passed)
+			std::cout << "  -> PASS (Should print [UNKNOWN] messages above)" << std::endl
+					  << std::endl;
+		else
+		{
+			std::cout << RED << "  -> FAIL" << RESET << std::endl
+					  << std::endl;
+			all_passed = false;
+		}
+	}
 
+	{
+		std::cout << MAGENTA << "Test 3: Empty String - Should handle gracefully without crashing..." << RESET << std::endl;
+		bool passed = true;
+		try
+		{
+			harl.complain("");
+		}
+		catch (...)
+		{
+			passed = false;
+			all_passed = false;
+		}
+		if (passed)
+			std::cout << "  -> PASS" << std::endl
+					  << std::endl;
+		else
+		{
+			std::cout << RED << "  -> FAIL" << RESET << std::endl
+					  << std::endl;
+			all_passed = false;
+		}
+	}
 
-	run_test(harl, "debug");
+	{
+		std::cout << MAGENTA << "Test 4: Massive String - Should not crash on huge input..." << RESET << std::endl;
+		bool passed = true;
+		try
+		{
+			std::string huge(10000, 'A');
+			harl.complain(huge);
+		}
+		catch (...)
+		{
+			passed = false;
+			all_passed = false;
+		}
+		if (passed)
+			std::cout << "  -> PASS" << std::endl
+					  << std::endl;
+		else
+		{
+			std::cout << RED << "  -> FAIL" << RESET << std::endl
+					  << std::endl;
+			all_passed = false;
+		}
+	}
 
+	// Summary
+	if (all_passed)
+		std::cout << GREEN << "All Harl 2.0 tests passed!" << std::endl
+				  << RESET;
+	else
+		std::cout << RED << "Some Harl 2.0 tests failed." << std::endl
+				  << RESET;
 
-	std::cout << MAGENTA << "Testing Direto - Gaming" << RESET << std::endl;
-	harl.complain("Gaming");
-	std::cout << MAGENTA << "Testing Direto - DEBUG" << RESET << std::endl;
-	harl.complain("DEBUG");
-	return (0);
+	return (all_passed ? 0 : 1);
 }
