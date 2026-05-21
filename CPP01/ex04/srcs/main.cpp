@@ -28,7 +28,7 @@ bool writeFileContent(const std::string &filename, const std::string &content)
 // --- Automated Test Runner ---
 
 void runTest(const std::string &testName, const std::string &input,
-			 const std::string &s1, const std::string &s2,
+			 const std::string &search, const std::string &replace,
 			 const std::string &expected, bool expectSuccess, bool &all_passed)
 {
 	bool success;
@@ -40,7 +40,7 @@ void runTest(const std::string &testName, const std::string &input,
 
 	writeFileContent(inFile, input);
 
-	Replacer rep(inFile, s1, s2);
+	Replacer rep(inFile, search, replace);
 	success = rep.execute();
 	output = readFileContent(outFile);
 
@@ -85,8 +85,8 @@ int runTests(void)
 	// Test 4: Empty File
 	runTest("Empty_File", "", "abc", "def", "", true, all_passed);
 
-	// Test 5: Replace with Empty S2 (Deletion)
-	runTest("Delete_s2_Empty", "Remove this part", " this", "",
+	// Test 5: Replace with Empty replace (Deletion)
+	runTest("Delete_replace_Empty", "Remove this part", " this", "",
 			"Remove part", true, all_passed);
 
 	// Test 6: Adjacent Occurrences
@@ -95,8 +95,8 @@ int runTests(void)
 	// Test 7: Substring Match (O "cat" dentro de "cats" DEVE ser substituído)
 	runTest("Substring_Match", "I love cats", "cat", "dog", "I love dogs", true, all_passed);
 
-	// Test 8: Empty S1 Should Fail (Defensive)
-	runTest("Empty_s1_Fail", "Some content", "", "replace", "", false, all_passed);
+	// Test 8: Empty search Should Fail (Defensive)
+	runTest("Empty_search_Fail", "Some content", "", "replace", "", false, all_passed);
 
 	// Test 9: Empty Filename Should Fail (Defensive - Must be done outside runTest)
 	{
@@ -159,21 +159,21 @@ int main(int argc, char **argv)
 	if (argc != 4)
 	{
 		std::cerr << RED << "Error: Invalid number of arguments." << std::endl
-				  << "Usage: " << argv[0] << " <filename> <s1> <s2>" << RESET << std::endl;
+				  << "Usage: " << argv[0] << " <filename> <search> <replace>" << RESET << std::endl;
 		return (1);
 	}
 
 	const std::string filename = argv[1];
-	const std::string s1 = argv[2];
-	const std::string s2 = argv[3];
+	const std::string search = argv[2];
+	const std::string replace = argv[3];
 
-	if (s1.empty())
+	if (search.empty())
 	{
-		std::cerr << RED << "Error: The string to be replaced (s1) cannot be empty." << RESET << std::endl;
+		std::cerr << RED << "Error: The string to be replaced (search) cannot be empty." << RESET << std::endl;
 		return (1);
 	}
 
-	Replacer replacer(filename, s1, s2);
+	Replacer replacer(filename, search, replace);
 	if (!replacer.execute())
 	{
 		std::cerr << RED << "Error: Failed to process the file replacement. Check file existence and permissions." << RESET << std::endl;

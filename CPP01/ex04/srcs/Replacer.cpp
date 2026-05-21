@@ -3,7 +3,7 @@
 #include <sstream>
 
 Replacer::Replacer(const std::string &filename, const std::string &s1,
-	const std::string &s2) : _filename(filename), _s1(s1), _s2(s2)
+	const std::string &s2) : _filename(filename), _search(s1), _replace(s2)
 {
 }
 
@@ -13,7 +13,7 @@ Replacer::~Replacer()
 
 bool Replacer::execute() const
 {
-	if (_s1.empty() || _filename.empty())
+	if (_search.empty() || _filename.empty())
 	{
 		return (false);
 	}
@@ -59,12 +59,12 @@ std::string Replacer::_replaceString(const std::string &content) const
 
 	result.reserve(content.size());
 
-	while ((pos = content.find(_s1, pos)) != std::string::npos)
+	while ((pos = content.find(_search, pos)) != std::string::npos)
 	{
 		result.append(content, prevPos, pos - prevPos);
-		result.append(_s2);
+		result.append(_replace);
 
-		pos += _s1.length();
+		pos += _search.length();
 		prevPos = pos;
 	}
 
