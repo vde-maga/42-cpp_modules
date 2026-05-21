@@ -52,6 +52,7 @@ clean:
 fclean: clean
 	@echo "$(RED)Removing executable$(RESET)"
 	@rm -f $(NAME)
+	@rm -f test*
 	@echo "$(GREEN)Done!$(RESET)"
 
 re: fclean all
