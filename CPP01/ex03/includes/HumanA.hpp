@@ -8,7 +8,6 @@ class HumanA
   private:
 	std::string _name;
 	Weapon &_weapon;
-		// Referência: HumanA sempre tem arma. Não pode ser reassinada.
 
   public:
 	HumanA(const std::string &name, Weapon &weapon);

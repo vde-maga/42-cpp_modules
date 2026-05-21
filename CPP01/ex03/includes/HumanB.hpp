@@ -7,7 +7,7 @@ class HumanB
 {
   private:
 	std::string _name;
-	Weapon *_weapon; // Ponteiro: HumanB pode não ter arma e pode trocá-la.
+	Weapon *_weapon;
 
   public:
 	HumanB(const std::string &name);
