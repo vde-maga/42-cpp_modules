@@ -3,6 +3,8 @@
 #include <cmath>
 #include <iostream>
 
+const int Fixed::_fractionalBits = 8;
+
 Fixed::Fixed() : _value(0)
 {
 	std::cout << GREEN << "Default constructor called" << RESET << std::endl;
@@ -13,8 +15,8 @@ Fixed::Fixed(const int value) : _value(value * (1 << _fractionalBits))
 	std::cout << RED << "Int constructor called" << RESET << std::endl;
 }
 
-Fixed::Fixed(const float value) : _value(static_cast<int>(roundf(value
-			* (1 << _fractionalBits))))
+Fixed::Fixed(const float value) :
+	_value(static_cast<int>(roundf(value * (1 << _fractionalBits))))
 {
 	std::cout << WHITE << "Float constructor called" << RESET << std::endl;
 }
