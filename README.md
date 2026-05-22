@@ -17,6 +17,8 @@ This repository contains my solutions to the 42 C++ modules (00 to 09). Each fil
 
 ## Module 01 — Memory, References, and File I/O
 
+![CPP01 Evaluation](/screenshots/CPP01.png)
+
 | File              | Concept                                          |
 |-------------------|--------------------------------------------------|
 | ex00              | Stack vs heap allocation, constructors           |
