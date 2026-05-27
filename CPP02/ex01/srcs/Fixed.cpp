@@ -10,7 +10,8 @@ Fixed::Fixed() : _value(0)
 	std::cout << GREEN << "Default constructor called" << RESET << std::endl;
 }
 
-Fixed::Fixed(const int value) : _value(value * (1 << _fractionalBits))
+Fixed::Fixed(const int value) : 
+	_value(value * (1 << _fractionalBits))
 {
 	std::cout << RED << "Int constructor called" << RESET << std::endl;
 }
