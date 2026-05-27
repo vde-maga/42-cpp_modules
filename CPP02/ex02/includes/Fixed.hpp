@@ -1,13 +1,13 @@
 #ifndef FIXED_HPP
 # define FIXED_HPP
 
-# include <iosfwd>
+# include <iostream>
 
 class Fixed
 {
   private:
 	int _value;
-	static const int _fractionalBits = 8;
+	static const int _fractionalBits;
 
   public:
 	Fixed();
@@ -23,6 +23,7 @@ class Fixed
 	float toFloat(void) const;
 	int toInt(void) const;
 
+	// Comparison operators
 	bool operator>(const Fixed &other) const;
 	bool operator<(const Fixed &other) const;
 	bool operator>=(const Fixed &other) const;
@@ -30,16 +31,19 @@ class Fixed
 	bool operator==(const Fixed &other) const;
 	bool operator!=(const Fixed &other) const;
 
+	// Arithmetic operators
 	Fixed operator+(const Fixed &other) const;
 	Fixed operator-(const Fixed &other) const;
 	Fixed operator*(const Fixed &other) const;
 	Fixed operator/(const Fixed &other) const;
 
-	Fixed &operator++(void);
-	Fixed operator++(int);
-	Fixed &operator--(void);
-	Fixed operator--(int);
+	// Increment/Decrement
+	Fixed &operator++(void); // Pre-increment
+	Fixed operator++(int);   // Post-increment
+	Fixed &operator--(void); // Pre-decrement
+	Fixed operator--(int);   // Post-decrement
 
+	// Min/Max
 	static Fixed &min(Fixed &a, Fixed &b);
 	static const Fixed &min(const Fixed &a, const Fixed &b);
 	static Fixed &max(Fixed &a, Fixed &b);
