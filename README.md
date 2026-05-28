@@ -33,6 +33,8 @@ This repository contains my solutions to the 42 C++ modules (00 to 09). Each fil
 
 ## Module 02 — OOP and Ad-hoc Polymorphism
 
+![CPP02 Evaluation](/screenshots/CPP02.png)
+
 | File                  | Concept                                             |
 |-----------------------|-----------------------------------------------------|
 | ex00                  | Orthodox Canonical Form, fixed-point arithmetic     |
