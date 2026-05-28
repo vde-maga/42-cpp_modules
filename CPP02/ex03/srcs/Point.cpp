@@ -1,10 +1,11 @@
+#include "Colors.hpp"
 #include "Point.hpp"
 
 Point::Point() : _x(Fixed()), _y(Fixed())
 {
 }
 
-Point::Point(Fixed const &x, Fixed const &y) : _x(x), _y(y)
+Point::Point(const float x, const float y) : _x(Fixed(x)), _y(Fixed(y))
 {
 }
 
