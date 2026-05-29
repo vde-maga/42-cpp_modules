@@ -111,16 +111,18 @@ void ClapTrap::takeDamage(unsigned int amount)
 		return ;
 	}
 
+	// Impedir Underflow
+	// 10 - 15 = -5
+	// unsigned int nao permite -5, logo vai para MAX_UINT
 	if (amount >= _hitPoints)
 		_hitPoints = 0;
 	else
-	{
 		_hitPoints = _hitPoints - amount;
-		std::cout << "ClapTrap " << _name
-			<< BLUE << " takes " << RESET << amount
-			<< " points of damage! Hit points left: " << _hitPoints
-			<< RESET << std::endl;
-	}
+
+	std::cout << "ClapTrap " << _name
+		<< BLUE << " takes " << RESET << amount
+		<< " points of damage! Hit points left: " << _hitPoints
+		<< RESET << std::endl;
 }
 
 void ClapTrap::beRepaired(unsigned int amount)
@@ -134,6 +136,9 @@ void ClapTrap::beRepaired(unsigned int amount)
 	}
 	--_energyPoints;
 
+	// Impedir Overflow
+	// 4294967290 + 10 = 4294967300
+	// Fica maior que o MAX_UINT, logo, voltaria a 0
 	if (amount > MAX_HP - _hitPoints)
 		_hitPoints = MAX_HP;
 	else

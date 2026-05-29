@@ -11,7 +11,6 @@ class ClapTrap
 	unsigned int _energyPoints;
 	unsigned int _attackDamage;
 
-	// Constante para evitar "números mágicos" e overflow
 	static const unsigned int MAX_HP = static_cast<unsigned int>(-1);
 
   public:
