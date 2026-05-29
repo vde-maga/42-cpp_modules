@@ -6,10 +6,13 @@
 class ClapTrap
 {
   private:
-	std::string name_;
-	unsigned int hitPoints_;
-	unsigned int energyPoints_;
-	unsigned int attackDamage_;
+	std::string _name;
+	unsigned int _hitPoints;
+	unsigned int _energyPoints;
+	unsigned int _attackDamage;
+
+	// Constante para evitar "números mágicos" e overflow
+	static const unsigned int MAX_HP = static_cast<unsigned int>(-1);
 
   public:
 	ClapTrap();
