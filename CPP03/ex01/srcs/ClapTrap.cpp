@@ -4,112 +4,150 @@
 
 // ---------------------- Orthodox Canonical Form ------------------------------
 
-ClapTrap::ClapTrap(void) : name_("Default"), hitPoints_(10), energyPoints_(10),
-						   attackDamage_(0)
+ClapTrap::ClapTrap(void) :
+	_name("Default"), _hitPoints(10),
+	_energyPoints(10), _attackDamage(0)
 {
-	std::cout << GREEN UNDERLINE << "ClapTrap " << name_ << " default constructor called" << RESET << std::endl;
+	std::cout << GREEN UNDERLINE << "ClapTrap " << _name
+		<< " default constructor called"
+		<< RESET << std::endl;
 }
 
-ClapTrap::ClapTrap(const std::string &name) : name_(name), hitPoints_(10),
-											  energyPoints_(10), attackDamage_(0)
+ClapTrap::ClapTrap(const std::string &name) :
+	_name(name), _hitPoints(10),
+	_energyPoints(10), _attackDamage(0)
 {
-	std::cout << GREEN UNDERLINE << "ClapTrap " << name_ << " parameterized constructor called" << RESET << std::endl;
+	std::cout << GREEN UNDERLINE << "ClapTrap " << _name
+		<< " parameterized constructor called"
+		<< RESET << std::endl;
 }
 
-ClapTrap::ClapTrap(const ClapTrap &other) : name_(other.name_),
-											hitPoints_(other.hitPoints_), energyPoints_(other.energyPoints_),
-											attackDamage_(other.attackDamage_)
+ClapTrap::ClapTrap(const ClapTrap &other) :
+	_name(other._name), _hitPoints(other._hitPoints),
+	_energyPoints(other._energyPoints), _attackDamage(other._attackDamage)
 {
-	std::cout << GREEN UNDERLINE << "ClapTrap " << name_ << " copy constructor called" << RESET << std::endl;
+	std::cout << GREEN UNDERLINE << "ClapTrap " << _name
+		<< " copy constructor called"
+		<< RESET << std::endl;
 }
 
 ClapTrap &ClapTrap::operator=(const ClapTrap &other)
 {
-	std::cout << GREEN UNDERLINE << "ClapTrap " << name_ << " assigment operator called" << RESET << std::endl;
+	std::cout << GREEN UNDERLINE << "ClapTrap " << _name
+		<< " assigment operator called"
+		<< RESET << std::endl;
+
 	if (this != &other)
 	{
-		name_ = other.name_;
-		hitPoints_ = other.hitPoints_;
-		energyPoints_ = other.energyPoints_;
-		attackDamage_ = other.attackDamage_;
+		_name = other._name;
+		_hitPoints = other._hitPoints;
+		_energyPoints = other._energyPoints;
+		_attackDamage = other._attackDamage;
 	}
 	return (*this);
 }
 
 ClapTrap::~ClapTrap(void)
 {
-	std::cout << GREEN UNDERLINE << "ClapTrap " << name_ << " destructor called" << RESET << std::endl;
+	std::cout << GREEN UNDERLINE << "ClapTrap " << _name
+		<< " destructor called"
+		<< RESET << std::endl;
 }
 
 // ---------------------- Public Methods ---------------------------------------
-// Getters
+
 const std::string &ClapTrap::getName(void) const
 {
-	return (name_);
+	return (_name);
 }
 
 unsigned int ClapTrap::getHitPoints(void) const
 {
-	return (hitPoints_);
+	return (_hitPoints);
 }
 
 unsigned int ClapTrap::getEnergyPoints(void) const
 {
-	return (energyPoints_);
+	return (_energyPoints);
 }
 
 unsigned int ClapTrap::getAttackDamage(void) const
 {
-	return (attackDamage_);
+	return (_attackDamage);
 }
-
-// Setters
 
 void ClapTrap::setAttackDamage(unsigned int damage)
 {
-	attackDamage_ = damage;
+	_attackDamage = damage;
 }
 
-// Other Functions
+// ---------------------- Game Logic ------------------------------------------
 
 void ClapTrap::attack(const std::string &target)
 {
-	if (hitPoints_ == 0 || energyPoints_ == 0)
+	if (_hitPoints == 0 || _energyPoints == 0)
 	{
-		std::cout << "ClapTrap " << name_ << CYAN << " cannot attack!"
-				  << RESET << std::endl;
-		return;
+		std::cout << "ClapTrap " << _name
+			<< CYAN << " cannot attack!"
+			<< RESET << std::endl;
+		return ;
 	}
-	energyPoints_--;
-	std::cout << "ClapTrap " << name_ << RED << " attacks " << RESET
-			  << target << ",causing " << attackDamage_
-			  << " points of damage!" << std::endl;
+
+	--_energyPoints;
+
+	std::cout << "ClapTrap "
+		<< _name << RED
+		<< " attacks " << RESET
+		<< target << ", causing "
+		<< _attackDamage << " points of damage!"
+		<< RESET << std::endl;
 }
 
 void ClapTrap::takeDamage(unsigned int amount)
 {
-	if (amount >= hitPoints_)
-		hitPoints_ = 0;
+	if (_hitPoints == 0)
+	{
+		std::cout << "ClapTrap " << _name
+			<< DIM << " is already destroyed!"
+			<< RESET << std::endl;
+		return ;
+	}
+
+	// Impedir Underflow
+	// 10 - 15 = -5
+	// unsigned int nao permite -5, logo vai para MAX_UINT
+	if (amount >= _hitPoints)
+		_hitPoints = 0;
 	else
-		hitPoints_ = hitPoints_ - amount;
-	std::cout << "ClapTrap " << name_ << BLUE << " takes " << RESET
-			  << amount << " points of damage! Hit points left: "
-			  << hitPoints_ << std::endl;
+		_hitPoints = _hitPoints - amount;
+
+	std::cout << "ClapTrap " << _name
+		<< BLUE << " takes " << RESET << amount
+		<< " points of damage! Hit points left: " << _hitPoints
+		<< RESET << std::endl;
 }
 
 void ClapTrap::beRepaired(unsigned int amount)
 {
-	if (hitPoints_ == 0 || energyPoints_ == 0)
+	if (_hitPoints == 0 || _energyPoints == 0)
 	{
-		std::cout << "ClapTrap " << name_ << YELLOW << " cannot be repaired!" << RESET << std::endl;
-		return;
+		std::cout << "ClapTrap " << _name
+			<< YELLOW << " cannot be repaired!"
+			<< RESET << std::endl;
+		return ;
 	}
-	energyPoints_--;
-	if (hitPoints_ > hitPoints_ + amount)
-		hitPoints_ = static_cast<unsigned int>(-1);
+	--_energyPoints;
+
+	// Impedir Overflow
+	// 4294967290 + 10 = 4294967300
+	// Fica maior que o MAX_UINT, logo, voltaria a 0
+	if (amount > MAX_HP - _hitPoints)
+		_hitPoints = MAX_HP;
 	else
-		hitPoints_ = hitPoints_ + amount;
-	std::cout << "ClapTrap " << name_ << GREEN << " repairs itself for "
-			  << RESET << amount << " points! Hit points left: " << hitPoints_
-			  << std::endl;
+		_hitPoints = _hitPoints + amount;
+
+	std::cout << "ClapTrap " << _name
+		<< GREEN << " repairs itself for " << RESET << amount
+		<< " points! Hit points left: " << _hitPoints
+		<< RESET << std::endl;
 }
