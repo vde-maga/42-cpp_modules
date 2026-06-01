@@ -71,7 +71,7 @@ void ScavTrap::attack(const std::string &target)
 		<< RESET << std::endl;
 }
 
-void ScavTrap::guardGate(void)
+void ScavTrap::guardGate(void) const
 {
 	std::cout << "ScavTrap " << _name
 		<< MAGENTA << " is now in Gate keeper mode!"
