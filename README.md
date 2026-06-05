@@ -44,6 +44,9 @@ This repository contains my solutions to the 42 C++ modules (00 to 09). Each fil
 ---
 
 ## Module 03 — Inheritance & Polymorphism
+
+![CPP03 Evaluation](/screenshots/CPP03.png)
+
 | File                    | Concept                                       |
 |-------------------------|-----------------------------------------------|
 | ex00                    | Orthodox Canonical Form                       |
