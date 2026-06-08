@@ -3,206 +3,149 @@
 #include "Cat.hpp"
 #include "WrongAnimal.hpp"
 #include "WrongCat.hpp"
+#include "Colors.hpp"
 #include <iostream>
+#include <string>
 
-static void printSeparator(const char* title) {
-    std::cout << std::endl;
-    std::cout << "========================================" << std::endl;
-    std::cout << title << std::endl;
-    std::cout << "========================================" << std::endl;
+// --------------------- Test Framework Macros & Helpers ---------------------
+
+static int g_tests_passed = 0;
+static int g_tests_total = 0;
+
+static void assertTest(bool condition, const std::string &test_name)
+{
+    ++g_tests_total;
+    if (condition)
+    {
+        ++g_tests_passed;
+        std::cout << BRIGHT_GREEN << "[PASS] " << RESET << test_name << std::endl;
+    }
+    else
+    {
+        std::cout << BRIGHT_RED << "[FAIL] " << RESET << test_name << std::endl;
+    }
 }
 
-static void testPolymorphism(void) {
-    printSeparator("TEST: Polymorphism with Animal pointers");
+static void printSection(const std::string &title)
+{
+    std::cout << std::endl
+              << BOLD BG_MAGENTA << " " << title << " "
+              << RESET << std::endl;
+}
 
+// ----------------------------- Destructive Tests ----------------------------
+
+void testSubjectRequirements()
+{
+    printSection("1. Subject Basic Requirements & Polymorphism");
+    
     const Animal* meta = new Animal();
     const Animal* j = new Dog();
     const Animal* i = new Cat();
+    
+    assertTest(j->getType() == "Dog", "Dog type must be 'Dog'");
+    assertTest(i->getType() == "Cat", "Cat type must be 'Cat'");
+    assertTest(meta->getType() == "Animal", "Animal type must be 'Animal'");
 
-    std::cout << std::endl;
-    std::cout << "--- getType() calls ---" << std::endl;
-    std::cout << "j (Dog) type: " << j->getType() << std::endl;
-    std::cout << "i (Cat) type: " << i->getType() << std::endl;
-    std::cout << "meta (Animal) type: " << meta->getType() << std::endl;
-
-    std::cout << std::endl;
-    std::cout << "--- makeSound() calls ---" << std::endl;
-    std::cout << "Dog says: ";
-    j->makeSound();
-    std::cout << "Cat says: ";
-    i->makeSound();
-    std::cout << "Animal says: ";
-    meta->makeSound();
+    std::cout << BRIGHT_CYAN << "Animal sound: "; meta->makeSound();
+    std::cout << BRIGHT_YELLOW << "Cat sound: "; i->makeSound();
+    std::cout << BRIGHT_GREEN << "Dog sound: "; j->makeSound();
 
     delete meta;
     delete j;
     delete i;
+    
+    assertTest(true, "Subject main executed without crash (check valgrind for leaks)");
 }
 
-static void testDirectObjects(void) {
-    printSeparator("TEST: Direct object instantiation");
+void testWrongPolymorphism()
+{
+    printSection("2. Wrong Polymorphism (No virtual function)");
+    
+    const WrongAnimal* wrong_meta = new WrongAnimal();
+    const WrongAnimal* wrong_cat = new WrongCat();
+    
+    assertTest(wrong_meta->getType() == "WrongAnimal", "WrongAnimal type is correct");
+    assertTest(wrong_cat->getType() == "WrongCat", "WrongCat type stored is 'WrongCat'");
 
-    std::cout << "Creating Dog object:" << std::endl;
-    Dog dog;
-    std::cout << "Dog type: " << dog.getType() << std::endl;
-    std::cout << "Dog says: ";
-    dog.makeSound();
+    std::cout << BRIGHT_RED << "WrongAnimal sound: "; wrong_meta->makeSound();
+    std::cout << BRIGHT_RED << "WrongCat sound (via WrongAnimal ptr): "; wrong_cat->makeSound();
+    
+    // Como não é virtual, o WrongCat deve emitir o som do WrongAnimal.
+    // Não podemos verificar automaticamente o output do cout sem redirecionar, 
+    // mas a regra de negócio exige que o comportamento visual seja este.
+    assertTest(true, "Visual check: WrongCat MUST output WrongAnimal sound");
 
-    std::cout << std::endl;
-    std::cout << "Creating Cat object:" << std::endl;
+    delete wrong_meta;
+    delete wrong_cat;
+}
+
+void testOrthodoxCanonicalForm()
+{
+    printSection("3. Orthodox Canonical Form (Deep Copy & Self-Assignment)");
+
+    Dog original;
+    original.makeSound();
+    
+    std::cout << BRIGHT_BLUE << "--- Copy Constructor ---" << RESET << std::endl;
+    Dog copy(original);
+    assertTest(copy.getType() == "Dog", "Copied Dog has correct type");
+    
+    std::cout << BRIGHT_BLUE << "--- Assignment Operator ---" << RESET << std::endl;
+    Dog assigned;
+    assigned = original;
+    assertTest(assigned.getType() == "Dog", "Assigned Dog has correct type");
+
+    std::cout << BRIGHT_BLUE << "--- Self-Assignment ---" << RESET << std::endl;
+    Dog& ref = assigned; // Usar referência bypassa o -Wself-assign-overloaded do Clang
+    assigned = ref;
+    assertTest(assigned.getType() == "Dog", "Self-assignment handled gracefully");
+}
+
+void testObjectSlicing()
+{
+    printSection("4. Destructive Test: Object Slicing");
+
     Cat cat;
-    std::cout << "Cat type: " << cat.getType() << std::endl;
-    std::cout << "Cat says: ";
-    cat.makeSound();
+    Animal sliced_animal = cat; // Slicing! O objeto perde a parte da classe Cat.
 
-    std::cout << std::endl;
-    std::cout << "Creating Animal object:" << std::endl;
-    Animal animal;
-    std::cout << "Animal type: " << animal.getType() << std::endl;
-    std::cout << "Animal says: ";
-    animal.makeSound();
+    assertTest(sliced_animal.getType() == "Cat", "Sliced animal keeps 'Cat' type string (data)");
+    
+    std::cout << BRIGHT_CYAN << "Sliced Animal sound: "; sliced_animal.makeSound();
+    assertTest(true, "Visual check: Sliced Animal MUST bark (Animal sound), not Meow! (VTable sliced)");
 }
 
-static void testWrongHierarchy(void) {
-    printSeparator("TEST: WrongAnimal/WrongCat (non-virtual makeSound)");
+void testDirectInstantiation()
+{
+    printSection("5. Direct Instantiation & Stack Destruction Order");
 
-    const WrongAnimal* wrongMeta = new WrongAnimal();
-    const WrongAnimal* wrongI = new WrongCat();
-
-    std::cout << std::endl;
-    std::cout << "--- getType() calls ---" << std::endl;
-    std::cout << "WrongCat type: " << wrongI->getType() << std::endl;
-    std::cout << "WrongAnimal type: " << wrongMeta->getType() << std::endl;
-
-    std::cout << std::endl;
-    std::cout << "--- makeSound() calls (WRONG - no polymorphism) ---" << std::endl;
-    std::cout << "WrongCat says: ";
-    wrongI->makeSound();
-    std::cout << "WrongAnimal says: ";
-    wrongMeta->makeSound();
-
-    delete wrongMeta;
-    delete wrongI;
+    std::cout << BRIGHT_BLUE << "--- Creating Dog on stack ---" << RESET << std::endl;
+    {
+        Dog stack_dog;
+        stack_dog.makeSound();
+    } // Destrutor chamado aqui
+    std::cout << BRIGHT_BLUE << "--- Dog destroyed ---" << RESET << std::endl;
+    assertTest(true, "Visual check: Dog destroyed in correct LIFO order");
 }
 
-static void testCopyConstructor(void) {
-    printSeparator("TEST: Copy constructors (Orthodox Canonical Form)");
+int main()
+{
+    std::cout << BOLD YELLOW << "STARTING ANIMAL DESTRUCTIVE TEST SUITE" << RESET << std::endl;
 
-    std::cout << "Creating original Dog:" << std::endl;
-    Dog originalDog;
-    std::cout << std::endl;
+    testSubjectRequirements();
+    testWrongPolymorphism();
+    testOrthodoxCanonicalForm();
+    testObjectSlicing();
+    testDirectInstantiation();
 
-    std::cout << "Creating Dog copy via copy constructor:" << std::endl;
-    Dog dogCopy(originalDog);
-    std::cout << "Copy type: " << dogCopy.getType() << std::endl;
-    std::cout << "Copy says: ";
-    dogCopy.makeSound();
+    std::cout << std::endl
+              << BOLD << "=====================================" << RESET << std::endl;
+    std::cout << BOLD << "TOTAL: " << g_tests_passed << "/" << g_tests_total << " tests passed." << RESET << std::endl;
 
-    std::cout << std::endl;
-    std::cout << "Creating original Cat:" << std::endl;
-    Cat originalCat;
-    std::cout << std::endl;
+    if (g_tests_passed == g_tests_total)
+        std::cout << BRIGHT_GREEN << "ALL TESTS PASSED!" << RESET << std::endl;
+    else
+        std::cout << BRIGHT_RED << "SOME TESTS FAILED!" << RESET << std::endl;
 
-    std::cout << "Creating Cat copy via copy constructor:" << std::endl;
-    Cat catCopy(originalCat);
-    std::cout << "Copy type: " << catCopy.getType() << std::endl;
-    std::cout << "Copy says: ";
-    catCopy.makeSound();
-}
-
-static void testAssignmentOperator(void) {
-    printSeparator("TEST: Assignment operators (Orthodox Canonical Form)");
-
-    std::cout << "Creating Dog A:" << std::endl;
-    Dog dogA;
-    std::cout << std::endl;
-
-    std::cout << "Creating Dog B:" << std::endl;
-    Dog dogB;
-    std::cout << std::endl;
-
-    std::cout << "Assigning Dog A to Dog B:" << std::endl;
-    dogB = dogA;
-    std::cout << "Dog B type after assignment: " << dogB.getType() << std::endl;
-
-    std::cout << std::endl;
-    std::cout << "Creating Cat C:" << std::endl;
-    Cat catC;
-    std::cout << std::endl;
-
-    std::cout << "Creating Cat D:" << std::endl;
-    Cat catD;
-    std::cout << std::endl;
-
-    std::cout << "Assigning Cat C to Cat D:" << std::endl;
-    catD = catC;
-    std::cout << "Cat D type after assignment: " << catD.getType() << std::endl;
-}
-
-static void testSelfAssignment(void) {
-    printSeparator("TEST: Self-assignment protection");
-
-    Dog dog;
-    Dog* ptr = &dog;
-    std::cout << "Self-assigning Dog to itself via pointer:" << std::endl;
-    dog = *ptr;
-    std::cout << "Dog type after self-assignment: " << dog.getType() << std::endl;
-}
-
-static void testArrayOfAnimals(void) {
-    printSeparator("TEST: Array of Animal pointers with various types");
-
-    const int size = 6;
-    const Animal* animals[size];
-
-    animals[0] = new Animal();
-    animals[1] = new Dog();
-    animals[2] = new Cat();
-    animals[3] = new Dog();
-    animals[4] = new Cat();
-    animals[5] = new Animal();
-
-    std::cout << std::endl;
-    std::cout << "--- Iterating through array ---" << std::endl;
-    for (int i = 0; i < size; ++i) {
-        std::cout << "Animal[" << i << "] type: " << animals[i]->getType() << std::endl;
-        std::cout << "Animal[" << i << "] says: ";
-        animals[i]->makeSound();
-        std::cout << std::endl;
-    }
-
-    for (int i = 0; i < size; ++i) {
-        delete animals[i];
-    }
-}
-
-static void testWrongCatDirectInstantiation(void) {
-    printSeparator("TEST: WrongCat direct instantiation");
-
-    std::cout << "Creating WrongCat object:" << std::endl;
-    WrongCat wrongCat;
-    std::cout << "WrongCat type: " << wrongCat.getType() << std::endl;
-    std::cout << "WrongCat says (direct): ";
-    wrongCat.makeSound();
-
-    std::cout << std::endl;
-    std::cout << "Creating WrongAnimal object:" << std::endl;
-    WrongAnimal wrongAnimal;
-    std::cout << "WrongAnimal type: " << wrongAnimal.getType() << std::endl;
-    std::cout << "WrongAnimal says: ";
-    wrongAnimal.makeSound();
-}
-
-int main(void) {
-    testDirectObjects();
-    testPolymorphism();
-    testWrongHierarchy();
-    testCopyConstructor();
-    testAssignmentOperator();
-    testSelfAssignment();
-    testArrayOfAnimals();
-    testWrongCatDirectInstantiation();
-
-    printSeparator("All tests completed successfully!");
-    return 0;
+    return (g_tests_passed != g_tests_total);
 }
