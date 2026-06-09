@@ -2,15 +2,15 @@
 #include "Colors.hpp"
 
 Cat::Cat(void) :
-	AAnimal(), brain(new Brain())
+	AAnimal(), m_brain(new Brain())
 {
-	this->type = "Cat";
+	this->m_type = "Cat";
 	std::cout << BRIGHT_YELLOW << "[Cat] Default constructor called"
 		<< RESET << std::endl;
 }
 
 Cat::Cat(const Cat &other) :
-	AAnimal(other), brain(new Brain(*other.brain))
+	AAnimal(other), m_brain(new Brain(*other.m_brain))
 {
 	std::cout << BRIGHT_YELLOW << "[Cat] Copy constructor called"
 		<< RESET << std::endl;
@@ -18,7 +18,7 @@ Cat::Cat(const Cat &other) :
 
 Cat::~Cat(void)
 {
-	delete this->brain;
+	delete this->m_brain;
 	std::cout << BRIGHT_YELLOW << "[Cat] Destructor called"
 		<< RESET << std::endl;
 }
@@ -31,7 +31,7 @@ Cat &Cat::operator=(const Cat &other)
 	if (this != &other)
 	{
 		AAnimal::operator=(other);
-		*(this->brain) = *(other.brain);
+		*(this->m_brain) = *(other.m_brain);
 	}
 	return (*this);
 }
@@ -44,5 +44,5 @@ void Cat::makeSound(void) const
 
 Brain *Cat::getBrain(void) const
 {
-	return (this->brain);
+	return (this->m_brain);
 }

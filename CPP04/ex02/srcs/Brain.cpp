@@ -23,7 +23,7 @@ Brain &Brain::operator=(const Brain &other)
 	if (this != &other)
 	{
 		for (int i = 0; i < 100; ++i)
-			this->ideas[i] = other.ideas[i];
+			this->m_ideas[i] = other.m_ideas[i];
 	}
 	return (*this);
 }
@@ -37,12 +37,12 @@ Brain::~Brain(void)
 const std::string &Brain::getIdea(unsigned int idx) const
 {
 	if (idx >= 100)
-		return (this->ideas[0]);
-	return (this->ideas[idx]);
+		return (this->m_ideas[0]);
+	return (this->m_ideas[idx]);
 }
 
 void Brain::setIdea(unsigned int idx, const std::string &idea)
 {
 	if (idx < 100)
-		this->ideas[idx] = idea;
+		this->m_ideas[idx] = idea;
 }

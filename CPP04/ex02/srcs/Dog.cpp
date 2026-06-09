@@ -2,15 +2,15 @@
 #include "Colors.hpp"
 
 Dog::Dog(void) :
-	AAnimal(), brain(new Brain())
+	AAnimal(), m_brain(new Brain())
 {
-	this->type = "Dog";
+	this->m_type = "Dog";
 	std::cout << BRIGHT_GREEN << "[Dog] Default constructor called"
 		<< RESET << std::endl;
 }
 
 Dog::Dog(const Dog &other) :
-	AAnimal(other), brain(new Brain(*other.brain))
+	AAnimal(other), m_brain(new Brain(*other.m_brain))
 {
 	std::cout << BRIGHT_GREEN << "[Dog] Copy constructor called"
 		<< RESET << std::endl;
@@ -18,7 +18,7 @@ Dog::Dog(const Dog &other) :
 
 Dog::~Dog(void)
 {
-	delete this->brain;
+	delete this->m_brain;
 	std::cout << BRIGHT_GREEN << "[Dog] Destructor called"
 		<< RESET << std::endl;
 }
@@ -31,7 +31,7 @@ Dog &Dog::operator=(const Dog &other)
 	if (this != &other)
 	{
 		AAnimal::operator=(other);
-		*(this->brain) = *(other.brain);
+		*(this->m_brain) = *(other.m_brain);
 	}
 	return (*this);
 }
@@ -44,5 +44,5 @@ void Dog::makeSound(void) const
 
 Brain *Dog::getBrain(void) const
 {
-	return (this->brain);
+	return (this->m_brain);
 }

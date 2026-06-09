@@ -7,7 +7,7 @@
 class Dog : public AAnimal
 {
   private:
-	Brain *brain;
+	Brain *m_brain;
 
   public:
 	Dog(void);
