@@ -3,7 +3,7 @@
 
 Dog::Dog(void) : Animal()
 {
-	this->type = "Dog";
+	this->m_type = "Dog";
 
 	std::cout << BRIGHT_GREEN << "[Dog] Default constructor called"
 		<< RESET << std::endl;

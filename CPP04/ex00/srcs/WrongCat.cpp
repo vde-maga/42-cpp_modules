@@ -3,7 +3,7 @@
 
 WrongCat::WrongCat(void) : WrongAnimal()
 {
-	this->type = "WrongCat";
+	this->m_type = "WrongCat";
 	std::cout << BRIGHT_MAGENTA << "[WrongCat] Default constructor called"
 		<< RESET << std::endl;
 }

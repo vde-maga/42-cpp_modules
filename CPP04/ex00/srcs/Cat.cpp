@@ -3,7 +3,7 @@
 
 Cat::Cat(void) : Animal()
 {
-	this->type = "Cat";
+	this->m_type = "Cat";
 	std::cout << BRIGHT_YELLOW << "[Cat] Default constructor called"
 		<< RESET << std::endl;
 }

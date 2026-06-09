@@ -1,13 +1,13 @@
 #include "Colors.hpp"
 #include "WrongAnimal.hpp"
 
-WrongAnimal::WrongAnimal(void) : type("WrongAnimal")
+WrongAnimal::WrongAnimal(void) : m_type("WrongAnimal")
 {
 	std::cout << BRIGHT_RED << "[WrongAnimal] Default constructor called"
 		<< RESET << std::endl;
 }
 
-WrongAnimal::WrongAnimal(const WrongAnimal &other) : type(other.type)
+WrongAnimal::WrongAnimal(const WrongAnimal &other) : m_type(other.m_type)
 {
 	std::cout << BRIGHT_RED << "[WrongAnimal] Copy constructor called"
 		<< RESET << std::endl;
@@ -26,7 +26,7 @@ WrongAnimal &WrongAnimal::operator=(const WrongAnimal &other)
 
 	if (this != &other)
 	{
-		this->type = other.type;
+		this->m_type = other.m_type;
 	}
 	return (*this);
 }
@@ -39,5 +39,5 @@ void WrongAnimal::makeSound(void) const
 
 const std::string &WrongAnimal::getType(void) const
 {
-	return (this->type);
+	return (this->m_type);
 }
