@@ -38,7 +38,7 @@ Dog &Dog::operator=(const Dog &other)
 
 void Dog::makeSound(void) const
 {
-	std::cout << BRIGHT_GREEN << "* Meow! Meow! *"
+	std::cout << BRIGHT_GREEN << "* Woof! Woof! *"
 		<< RESET << std::endl;
 }
 
