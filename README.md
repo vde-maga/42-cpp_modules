@@ -58,6 +58,8 @@ This repository contains my solutions to the 42 C++ modules (00 to 09). Each fil
 
 ## Module 04 — Abstract Classes & Interfaces
 
+![CPP04 Evaluation](/screenshots/CPP04.png)
+
 | File                  | Concept                                                   |
 |-----------------------|-----------------------------------------------------------|
 | ex00                  | Abstract classes, virtual methods, dynamic polymorphism   |
