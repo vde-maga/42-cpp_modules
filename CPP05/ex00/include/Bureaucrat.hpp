@@ -1,7 +1,6 @@
 #ifndef BUREAUCRAT_HPP
 # define BUREAUCRAT_HPP
 
-# include "Colors.hpp"
 # include <exception>
 # include <iostream>
 # include <string>

@@ -1,4 +1,5 @@
-#include "Bureaucrat.hpp"
+#include "../include/Bureaucrat.hpp"
+#include "../include/Colors.hpp"
 
 const int Bureaucrat::HIGHEST_GRADE;
 const int Bureaucrat::LOWEST_GRADE;

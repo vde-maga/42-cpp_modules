@@ -1,5 +1,5 @@
-#include "Bureaucrat.hpp"
-#include "Colors.hpp"
+#include "../include/Bureaucrat.hpp"
+#include "../include/Colors.hpp"
 #include <iostream>
 #include <sstream>
 #include <climits>
