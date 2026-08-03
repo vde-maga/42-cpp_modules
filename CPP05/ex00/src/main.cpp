@@ -9,23 +9,30 @@
 static int g_tests_passed = 0;
 static int g_tests_total = 0;
 
-static void assertTest(bool condition, const std::string& test_name) {
+static void assertTest(bool condition, const std::string &test_name)
+{
     ++g_tests_total;
-    if (condition) {
+    if (condition)
+    {
         ++g_tests_passed;
         std::cout << BRIGHT_GREEN << "[PASS] " << RESET << test_name << std::endl;
-    } else {
+    }
+    else
+    {
         std::cout << BRIGHT_RED << "[FAIL] " << RESET << test_name << std::endl;
     }
 }
 
-static void printSection(const std::string& title) {
-    std::cout << std::endl << BOLD BG_MAGENTA << " " << title << " " << RESET << std::endl;
+static void printSection(const std::string &title)
+{
+    std::cout << std::endl
+              << BOLD BG_MAGENTA << " " << title << " " << RESET << std::endl;
 }
 
 // ----------------------------- Helper Functions ----------------------------
 
-static std::string captureBureaucratOutput(const Bureaucrat& b) {
+static std::string captureBureaucratOutput(const Bureaucrat &b)
+{
     std::ostringstream oss;
     oss << b;
     return oss.str();
@@ -33,9 +40,10 @@ static std::string captureBureaucratOutput(const Bureaucrat& b) {
 
 // ----------------------------- Destructive Tests ----------------------------
 
-void testOrthodoxCanonicalForm() {
+void testOrthodoxCanonicalForm()
+{
     printSection("1. Orthodox Canonical Form & Const-Correctness");
-    
+
     Bureaucrat b1;
     assertTest(b1.getName() == "Default" && b1.getGrade() == 150, "Default constructor initializes correctly");
 
@@ -53,7 +61,8 @@ void testOrthodoxCanonicalForm() {
     assertTest(captureBureaucratOutput(c) == expected, "operator<< formatted correctly on const object");
 }
 
-void testValidGradeBoundaries() {
+void testValidGradeBoundaries()
+{
     printSection("2. Valid Grade Boundaries");
 
     Bureaucrat high("Highest", 1);
@@ -63,29 +72,43 @@ void testValidGradeBoundaries() {
     assertTest(low.getGrade() == 150, "Grade 150 is valid (Lowest possible)");
 }
 
-void testConstructionExceptions() {
+void testConstructionExceptions()
+{
     printSection("3. Construction Exceptions (Too High & Too Low)");
 
     bool caught_high = false;
-    try {
+    try
+    {
         Bureaucrat b("Zero", 0);
-    } catch (const Bureaucrat::GradeTooHighException& e) {
+    }
+    catch (const Bureaucrat::GradeTooHighException &e)
+    {
         caught_high = true;
-    } catch (...) {}
+    }
+    catch (...)
+    {
+    }
 
     assertTest(caught_high, "Constructing with grade 0 throws GradeTooHighException");
 
     bool caught_low = false;
-    try {
+    try
+    {
         Bureaucrat b("Huge", 151);
-    } catch (const Bureaucrat::GradeTooLowException& e) {
+    }
+    catch (const Bureaucrat::GradeTooLowException &e)
+    {
         caught_low = true;
-    } catch (...) {}
+    }
+    catch (...)
+    {
+    }
 
     assertTest(caught_low, "Constructing with grade 151 throws GradeTooLowException");
 }
 
-void testIncrementDecrementLogic() {
+void testIncrementDecrementLogic()
+{
     printSection("4. Increment & Decrement Logic & Exceptions");
 
     Bureaucrat b("Mover", 75);
@@ -99,56 +122,74 @@ void testIncrementDecrementLogic() {
     /* Test Exceptions on boundaries */
     Bureaucrat top("Top", 1);
     bool caught_top_inc = false;
-    try {
+    try
+    {
         top.incrementGrade();
-    } catch (const Bureaucrat::GradeTooHighException& e) {
+    }
+    catch (const Bureaucrat::GradeTooHighException &e)
+    {
         caught_top_inc = true;
     }
     assertTest(caught_top_inc && top.getGrade() == 1, "Incrementing grade 1 throws GradeTooHighException and grade remains 1");
 
     Bureaucrat bottom("Bottom", 150);
     bool caught_bottom_dec = false;
-    try {
+    try
+    {
         bottom.decrementGrade();
-    } catch (const Bureaucrat::GradeTooLowException& e) {
+    }
+    catch (const Bureaucrat::GradeTooLowException &e)
+    {
         caught_bottom_dec = true;
     }
     assertTest(caught_bottom_dec && bottom.getGrade() == 150, "Decrementing grade 150 throws GradeTooLowException and grade remains 150");
 }
 
-void testExtremeOverflowDefense() {
+void testExtremeOverflowDefense()
+{
     printSection("5. Extreme Overflow/Underflow Defense (Zero UB)");
 
     bool caught_high = false;
-    try {
+    try
+    {
         Bureaucrat b("IntMin", INT_MIN);
-    } catch (const Bureaucrat::GradeTooHighException& e) {
+    }
+    catch (const Bureaucrat::GradeTooHighException &e)
+    {
         caught_high = true;
     }
     assertTest(caught_high, "Constructing with INT_MIN throws GradeTooHighException safely (no underflow)");
 
     bool caught_low = false;
-    try {
+    try
+    {
         Bureaucrat b("IntMax", INT_MAX);
-    } catch (const Bureaucrat::GradeTooLowException& e) {
+    }
+    catch (const Bureaucrat::GradeTooLowException &e)
+    {
         caught_low = true;
     }
     assertTest(caught_low, "Constructing with INT_MAX throws GradeTooLowException safely (no overflow)");
 }
 
-void testExceptionInheritanceCatch() {
+void testExceptionInheritanceCatch()
+{
     printSection("6. Polymorphic Exception Catching (Subject Requirement)");
 
     bool caught_base = false;
-    try {
+    try
+    {
         Bureaucrat b("Fail", -5);
-    } catch (std::exception& e) { /* Deve ser apanhável por std::exception& */
+    }
+    catch (std::exception &e)
+    { /* Deve ser apanhável por std::exception& */
         caught_base = true;
     }
     assertTest(caught_base, "Bureaucrat exception is catchable by std::exception&");
 }
 
-int main() {
+int main()
+{
     std::cout << BOLD YELLOW << "STARTING BUREAUCRAT DESTRUCTIVE TEST SUITE" << RESET << std::endl;
 
     testOrthodoxCanonicalForm();
@@ -158,7 +199,8 @@ int main() {
     testExtremeOverflowDefense();
     testExceptionInheritanceCatch();
 
-    std::cout << std::endl << BOLD << "=====================================" << RESET << std::endl;
+    std::cout << std::endl
+              << BOLD << "=====================================" << RESET << std::endl;
     std::cout << BOLD << "TOTAL: " << g_tests_passed << "/" << g_tests_total << " tests passed." << RESET << std::endl;
 
     if (g_tests_passed == g_tests_total)

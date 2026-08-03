@@ -8,21 +8,21 @@ const int Bureaucrat::LOWEST_GRADE;
 Bureaucrat::Bureaucrat(void) :
 	m_name("Default"), m_grade(LOWEST_GRADE)
 {
-	std::cout << BRIGHT_CYAN << "[Bureaucrat] Default constructor called for " << m_name
-		<< RESET << std::endl;
+	std::cout << BRIGHT_CYAN << "[Bureaucrat] Default constructor called for "
+		<< m_name << RESET << std::endl;
 }
 
 Bureaucrat::Bureaucrat(const Bureaucrat &other) :
 	m_name(other.m_name), m_grade(other.m_grade)
 {
-	std::cout << BRIGHT_CYAN << "[Bureaucrat] Copy constructor called for " << m_name
-		<< RESET << std::endl;
+	std::cout << BRIGHT_CYAN << "[Bureaucrat] Copy constructor called for "
+		<< m_name << RESET << std::endl;
 }
 
 Bureaucrat &Bureaucrat::operator=(const Bureaucrat &original)
 {
-	std::cout << BRIGHT_CYAN << "[Bureaucrat] Assignment operator called for " << m_name
-		<< RESET << std::endl;
+	std::cout << BRIGHT_CYAN << "[Bureaucrat] Assignment operator called for "
+		<< m_name << RESET << std::endl;
 
 	if (this != &original)
 	{
@@ -34,8 +34,8 @@ Bureaucrat &Bureaucrat::operator=(const Bureaucrat &original)
 
 Bureaucrat::~Bureaucrat(void)
 {
-	std::cout << BRIGHT_RED << "[Bureaucrat] Destructor called for " << m_name
-		<< RESET << std::endl;
+	std::cout << BRIGHT_RED << "[Bureaucrat] Destructor called for "
+		<< m_name << RESET << std::endl;
 }
 
 Bureaucrat::Bureaucrat(const std::string &name, int grade) :
@@ -49,9 +49,8 @@ Bureaucrat::Bureaucrat(const std::string &name, int grade) :
 	{
 		throw Bureaucrat::GradeTooLowException();
 	}
-
-	std::cout << BRIGHT_CYAN << "[Bureaucrat] Parameterized constructor called for " << m_name
-		<< RESET << std::endl;
+	std::cout << BRIGHT_CYAN << "[Bureaucrat] Parameterized constructor called for "
+		<< m_name << RESET << std::endl;
 }
 
 const std::string &Bureaucrat::getName(void) const

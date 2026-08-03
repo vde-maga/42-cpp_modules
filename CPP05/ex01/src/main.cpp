@@ -12,14 +12,16 @@ int main(void)
               << "==============================================" << std::endl
               << "    Bureaucrat & Form - Automated Unit Tests" << std::endl
               << "==============================================" << std::endl
-              << RESET << std::endl << std::endl;
+              << RESET << std::endl
+              << std::endl;
 
     /* ----------------------------------------------------------
      * Section 1: Bureaucrat Construction
      * ---------------------------------------------------------- */
     std::cout << BRIGHT_BLUE
               << "--- Section 1: Bureaucrat Construction ---"
-              << RESET << std::endl << std::endl;
+              << RESET << std::endl
+              << std::endl;
 
     /* Test 1: Valid grades */
     {
@@ -180,7 +182,8 @@ int main(void)
      * ---------------------------------------------------------- */
     std::cout << BRIGHT_BLUE
               << "--- Section 2: Bureaucrat Grade Modification ---"
-              << RESET << std::endl << std::endl;
+              << RESET << std::endl
+              << std::endl;
 
     /* Test 7: Normal increment/decrement */
     {
@@ -302,7 +305,8 @@ int main(void)
      * ---------------------------------------------------------- */
     std::cout << BRIGHT_BLUE
               << "--- Section 3: Bureaucrat Copy Semantics ---"
-              << RESET << std::endl << std::endl;
+              << RESET << std::endl
+              << std::endl;
 
     /* Test 11: Copy constructor */
     {
@@ -346,7 +350,9 @@ int main(void)
         std::cout << MAGENTA << "Test 13: Bureaucrat self-assignment" << RESET << std::endl;
         bool passed = true;
         Bureaucrat a("Self", 50);
-        a = a;
+
+        Bureaucrat *ptr = &a;
+        a = *ptr; // Bypasses -Wself-assign-overloaded
 
         if (a.getName() != "Self" || a.getGrade() != 50)
         {
@@ -364,7 +370,8 @@ int main(void)
      * ---------------------------------------------------------- */
     std::cout << BRIGHT_BLUE
               << "--- Section 4: Form Construction ---"
-              << RESET << std::endl << std::endl;
+              << RESET << std::endl
+              << std::endl;
 
     /* Test 14: Valid Form construction */
     {
@@ -516,7 +523,8 @@ int main(void)
      * ---------------------------------------------------------- */
     std::cout << BRIGHT_BLUE
               << "--- Section 5: Form beSigned ---"
-              << RESET << std::endl << std::endl;
+              << RESET << std::endl
+              << std::endl;
 
     /* Test 20: beSigned with exact required grade */
     {
@@ -692,7 +700,8 @@ int main(void)
      * ---------------------------------------------------------- */
     std::cout << BRIGHT_BLUE
               << "--- Section 6: Bureaucrat::signForm Integration ---"
-              << RESET << std::endl << std::endl;
+              << RESET << std::endl
+              << std::endl;
 
     /* Test 26: signForm success */
     {
@@ -765,7 +774,8 @@ int main(void)
      * ---------------------------------------------------------- */
     std::cout << BRIGHT_BLUE
               << "--- Section 7: Form Copy Semantics ---"
-              << RESET << std::endl << std::endl;
+              << RESET << std::endl
+              << std::endl;
 
     /* Test 29: Copy constructor (unsigned form) */
     {
@@ -826,7 +836,10 @@ int main(void)
         std::cout << MAGENTA << "Test 32: Form self-assignment" << RESET << std::endl;
         bool passed = true;
         Form f("Self", 50, 30);
-        f = f;
+
+        Form *ptr = &f;
+        f = *ptr; // Bypasses -Wself-assign-overloaded
+
         if (f.getName() != "Self" || f.getGradeToSign() != 50 || f.getGradeToExecute() != 30)
         {
             std::cerr << "  -> FAIL: Self-assignment corrupted object" << std::endl;
@@ -868,7 +881,8 @@ int main(void)
      * ---------------------------------------------------------- */
     std::cout << BRIGHT_BLUE
               << "--- Section 8: Output Operators ---"
-              << RESET << std::endl << std::endl;
+              << RESET << std::endl
+              << std::endl;
 
     /* Test 34: Bureaucrat operator<< */
     {
