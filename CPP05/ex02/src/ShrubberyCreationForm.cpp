@@ -9,7 +9,8 @@ ShrubberyCreationForm::ShrubberyCreationForm(void) :
 		<< RESET << std::endl;
 }
 
-ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &other) : AForm(other)
+ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &other) :
+	AForm(other)
 {
 	std::cout << BRIGHT_CYAN << "[ShrubberyCreationForm] Copy constructor called"
 		<< RESET << std::endl;
