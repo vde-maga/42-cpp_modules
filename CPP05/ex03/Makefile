@@ -1,7 +1,7 @@
 # ---------------------- Variables ---------------------------------------------
 
 # Executable
-NAME = No,YouNeedForm28B,Not28C..
+NAME = AtLeastThisBeatsCoffee-making
 
 # Directories
 OBJS_DIR = objs
