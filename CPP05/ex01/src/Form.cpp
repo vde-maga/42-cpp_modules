@@ -43,6 +43,7 @@ Form::~Form(void)
 		<< m_name << RESET << std::endl;
 }
 
+/* Parameterized Consructor*/
 Form::Form(const std::string &name, int gradeToSign, int gradeToExecute):
 	m_name(name), m_isSigned(false), m_gradeToSign(gradeToSign),
 	m_gradeToExecute(gradeToExecute)
@@ -54,6 +55,7 @@ Form::Form(const std::string &name, int gradeToSign, int gradeToExecute):
 		<< m_name << RESET << std::endl;
 }
 
+/* Getters */
 const std::string &Form::getName(void) const
 {
 	return (this->m_name);
@@ -74,6 +76,7 @@ int Form::getGradeToExecute(void) const
 	return (this->m_gradeToExecute);
 }
 
+/* Modifiers */
 void Form::beSigned(const Bureaucrat &bureaucrat)
 {
 	if (bureaucrat.getGrade() > this->m_gradeToSign)
@@ -95,6 +98,7 @@ void Form::validateGrade(int grade) const
 	}
 }
 
+/* Exceptions */
 const char *Form::GradeTooHighException::what(void) const throw()
 {
 	return ("Form exception: grade too high!");

@@ -5,6 +5,7 @@
 const int AForm::HIGHEST_GRADE;
 const int AForm::LOWEST_GRADE;
 
+/* Orthodox Canonical Form */
 AForm::AForm(void) :
 	m_name("Default"), m_isSigned(false), m_gradeToSign(LOWEST_GRADE),
 	m_gradeToExecute(LOWEST_GRADE), m_target("Default")
@@ -44,6 +45,7 @@ AForm::~AForm(void)
 		<< m_name << RESET << std::endl;
 }
 
+/* Parameterized Consructor*/
 AForm::AForm(const std::string &name, const std::string &target, int gradeToSign, int gradeToExecute) :
 	m_name(name), m_isSigned(false), m_gradeToSign(gradeToSign),
 	m_gradeToExecute(gradeToExecute), m_target(target)
@@ -56,6 +58,7 @@ AForm::AForm(const std::string &name, const std::string &target, int gradeToSign
 		<< m_name << RESET << std::endl;
 }
 
+/* Getters */
 const std::string &AForm::getName(void) const
 {
 	return (this->m_name);
@@ -81,6 +84,7 @@ int AForm::getGradeToExecute(void) const
 	return (this->m_gradeToExecute);
 }
 
+/* Modifiers */
 void AForm::beSigned(const Bureaucrat &bureaucrat)
 {
 	if (bureaucrat.getGrade() > this->m_gradeToSign)
@@ -115,6 +119,7 @@ void AForm::validateGrade(int grade) const
 	}
 }
 
+/* Exceptions */
 const char *AForm::GradeTooHighException::what(void) const throw()
 {
 	return ("AForm exception: grade too high!");

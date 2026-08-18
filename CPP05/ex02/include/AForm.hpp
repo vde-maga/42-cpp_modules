@@ -22,23 +22,28 @@ class AForm
 	virtual void executeAction(void) const = 0;
 
   public:
+	/* Orthodox Canonical Form */
 	AForm(void);
 	AForm(const AForm &other);
 	AForm &operator=(const AForm &other);
 	virtual ~AForm(void);
 
+	/* Parameterized Constructor */
 	AForm(const std::string &name, const std::string &target, int gradeToSign,
 		int gradeToExecute);
 
+	/* Getters */
 	const std::string &getName(void) const;
 	const std::string &getTarget(void) const;
 	bool isSigned(void) const;
 	int getGradeToSign(void) const;
 	int getGradeToExecute(void) const;
 
+	/* Modifiers */
 	void beSigned(const Bureaucrat &bureaucrat);
 	void execute(const Bureaucrat &executor) const;
 
+	/* Exceptions */
 	class GradeTooHighException : public std::exception
 	{
 		public:

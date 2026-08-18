@@ -192,6 +192,12 @@ int main()
 {
     std::cout << BOLD YELLOW << "STARTING BUREAUCRAT DESTRUCTIVE TEST SUITE" << RESET << std::endl;
 
+    Bureaucrat elsa;
+    Bureaucrat tiana("Tiana", 160);
+
+    std::cout << "Elsa: " << elsa << std::endl;
+    std::cout << "Tiana: " << tiana << std::endl;
+
     testOrthodoxCanonicalForm();
     testValidGradeBoundaries();
     testConstructionExceptions();

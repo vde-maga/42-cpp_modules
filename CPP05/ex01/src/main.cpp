@@ -35,20 +35,20 @@ int main(void)
 
             if (a.getGrade() != 1 || b.getGrade() != 75 || c.getGrade() != 150)
             {
-                std::cerr << "  -> FAIL: Grade mismatch" << std::endl;
+                std::cerr << "  " << BRIGHT_RED << "-> FAIL: Grade mismatch" << RESET << std::endl;
                 passed = false;
                 all_passed = false;
             }
             if (a.getName() != "Alice" || b.getName() != "Bob" || c.getName() != "Charlie")
             {
-                std::cerr << "  -> FAIL: Name mismatch" << std::endl;
+                std::cerr << "  " << BRIGHT_RED << "-> FAIL: Name mismatch" << RESET << std::endl;
                 passed = false;
                 all_passed = false;
             }
         }
         catch (const std::exception &e)
         {
-            std::cerr << "  -> FAIL: Unexpected exception: " << e.what() << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Unexpected exception: " << e.what() << RESET << std::endl;
             passed = false;
             all_passed = false;
         }
@@ -64,16 +64,17 @@ int main(void)
         try
         {
             Bureaucrat b("High", 0);
-            std::cerr << "  -> FAIL: Expected GradeTooHighException" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Expected GradeTooHighException" << RESET << std::endl;
             all_passed = false;
         }
-        catch (const Bureaucrat::GradeTooHighException &)
+        catch (const Bureaucrat::GradeTooHighException &e)
         {
+            std::cout << "  " << BRIGHT_YELLOW << "[Expected Exception Caught]: " << e.what() << RESET << std::endl;
             passed = true;
         }
         catch (...)
         {
-            std::cerr << "  -> FAIL: Wrong exception type" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Wrong exception type" << RESET << std::endl;
             all_passed = false;
         }
         if (passed)
@@ -88,16 +89,17 @@ int main(void)
         try
         {
             Bureaucrat b("Low", 151);
-            std::cerr << "  -> FAIL: Expected GradeTooLowException" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Expected GradeTooLowException" << RESET << std::endl;
             all_passed = false;
         }
-        catch (const Bureaucrat::GradeTooLowException &)
+        catch (const Bureaucrat::GradeTooLowException &e)
         {
+            std::cout << "  " << BRIGHT_YELLOW << "[Expected Exception Caught]: " << e.what() << RESET << std::endl;
             passed = true;
         }
         catch (...)
         {
-            std::cerr << "  -> FAIL: Wrong exception type" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Wrong exception type" << RESET << std::endl;
             all_passed = false;
         }
         if (passed)
@@ -112,16 +114,17 @@ int main(void)
         try
         {
             Bureaucrat b("Neg", -5);
-            std::cerr << "  -> FAIL: Expected GradeTooHighException" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Expected GradeTooHighException" << RESET << std::endl;
             all_passed = false;
         }
-        catch (const Bureaucrat::GradeTooHighException &)
+        catch (const Bureaucrat::GradeTooHighException &e)
         {
+            std::cout << "  " << BRIGHT_YELLOW << "[Expected Exception Caught]: " << e.what() << RESET << std::endl;
             passed = true;
         }
         catch (...)
         {
-            std::cerr << "  -> FAIL: Wrong exception type" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Wrong exception type" << RESET << std::endl;
             all_passed = false;
         }
         if (passed)
@@ -136,16 +139,17 @@ int main(void)
         try
         {
             Bureaucrat b("Max", INT_MAX);
-            std::cerr << "  -> FAIL: Expected GradeTooLowException" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Expected GradeTooLowException" << RESET << std::endl;
             all_passed = false;
         }
-        catch (const Bureaucrat::GradeTooLowException &)
+        catch (const Bureaucrat::GradeTooLowException &e)
         {
+            std::cout << "  " << BRIGHT_YELLOW << "[Expected Exception Caught]: " << e.what() << RESET << std::endl;
             passed = true;
         }
         catch (...)
         {
-            std::cerr << "  -> FAIL: Wrong exception type" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Wrong exception type" << RESET << std::endl;
             all_passed = false;
         }
         if (passed)
@@ -160,16 +164,17 @@ int main(void)
         try
         {
             Bureaucrat b("Min", INT_MIN);
-            std::cerr << "  -> FAIL: Expected GradeTooHighException" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Expected GradeTooHighException" << RESET << std::endl;
             all_passed = false;
         }
-        catch (const Bureaucrat::GradeTooHighException &)
+        catch (const Bureaucrat::GradeTooHighException &e)
         {
+            std::cout << "  " << BRIGHT_YELLOW << "[Expected Exception Caught]: " << e.what() << RESET << std::endl;
             passed = true;
         }
         catch (...)
         {
-            std::cerr << "  -> FAIL: Wrong exception type" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Wrong exception type" << RESET << std::endl;
             all_passed = false;
         }
         if (passed)
@@ -195,21 +200,21 @@ int main(void)
             b.incrementGrade();
             if (b.getGrade() != 74)
             {
-                std::cerr << "  -> FAIL: Expected grade 74, got " << b.getGrade() << std::endl;
+                std::cerr << "  " << BRIGHT_RED << "-> FAIL: Expected grade 74, got " << b.getGrade() << RESET << std::endl;
                 passed = false;
                 all_passed = false;
             }
             b.decrementGrade();
             if (b.getGrade() != 75)
             {
-                std::cerr << "  -> FAIL: Expected grade 75, got " << b.getGrade() << std::endl;
+                std::cerr << "  " << BRIGHT_RED << "-> FAIL: Expected grade 75, got " << b.getGrade() << RESET << std::endl;
                 passed = false;
                 all_passed = false;
             }
         }
         catch (const std::exception &e)
         {
-            std::cerr << "  -> FAIL: Unexpected exception: " << e.what() << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Unexpected exception: " << e.what() << RESET << std::endl;
             passed = false;
             all_passed = false;
         }
@@ -226,16 +231,17 @@ int main(void)
         {
             Bureaucrat b("Top", 1);
             b.incrementGrade();
-            std::cerr << "  -> FAIL: Expected GradeTooHighException" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Expected GradeTooHighException" << RESET << std::endl;
             all_passed = false;
         }
-        catch (const Bureaucrat::GradeTooHighException &)
+        catch (const Bureaucrat::GradeTooHighException &e)
         {
+            std::cout << "  " << BRIGHT_YELLOW << "[Expected Exception Caught]: " << e.what() << RESET << std::endl;
             passed = true;
         }
         catch (...)
         {
-            std::cerr << "  -> FAIL: Wrong exception type" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Wrong exception type" << RESET << std::endl;
             all_passed = false;
         }
         if (passed)
@@ -251,16 +257,17 @@ int main(void)
         {
             Bureaucrat b("Bottom", 150);
             b.decrementGrade();
-            std::cerr << "  -> FAIL: Expected GradeTooLowException" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Expected GradeTooLowException" << RESET << std::endl;
             all_passed = false;
         }
-        catch (const Bureaucrat::GradeTooLowException &)
+        catch (const Bureaucrat::GradeTooLowException &e)
         {
+            std::cout << "  " << BRIGHT_YELLOW << "[Expected Exception Caught]: " << e.what() << RESET << std::endl;
             passed = true;
         }
         catch (...)
         {
-            std::cerr << "  -> FAIL: Wrong exception type" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Wrong exception type" << RESET << std::endl;
             all_passed = false;
         }
         if (passed)
@@ -279,19 +286,20 @@ int main(void)
             {
                 b.incrementGrade();
             }
-            catch (const std::exception &)
+            catch (const std::exception &e)
             {
+                std::cout << "  " << BRIGHT_YELLOW << "[Internal Catch]: " << e.what() << RESET << std::endl;
             }
             if (b.getGrade() != 1)
             {
-                std::cerr << "  -> FAIL: Grade was modified, expected 1, got " << b.getGrade() << std::endl;
+                std::cerr << "  " << BRIGHT_RED << "-> FAIL: Grade was modified, expected 1, got " << b.getGrade() << RESET << std::endl;
                 passed = false;
                 all_passed = false;
             }
         }
         catch (const std::exception &e)
         {
-            std::cerr << "  -> FAIL: Unexpected exception: " << e.what() << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Unexpected exception: " << e.what() << RESET << std::endl;
             passed = false;
             all_passed = false;
         }
@@ -317,7 +325,7 @@ int main(void)
 
         if (copy.getName() != original.getName() || copy.getGrade() != original.getGrade())
         {
-            std::cerr << "  -> FAIL: Copy does not match original" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Copy does not match original" << RESET << std::endl;
             passed = false;
             all_passed = false;
         }
@@ -336,7 +344,7 @@ int main(void)
 
         if (b.getName() != "Alpha" || b.getGrade() != 10)
         {
-            std::cerr << "  -> FAIL: Assignment failed" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Assignment failed" << RESET << std::endl;
             passed = false;
             all_passed = false;
         }
@@ -356,7 +364,7 @@ int main(void)
 
         if (a.getName() != "Self" || a.getGrade() != 50)
         {
-            std::cerr << "  -> FAIL: Self-assignment corrupted object" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Self-assignment corrupted object" << RESET << std::endl;
             passed = false;
             all_passed = false;
         }
@@ -382,14 +390,14 @@ int main(void)
             Form f("TaxForm", 50, 25);
             if (f.getName() != "TaxForm" || f.isSigned() != false || f.getGradeToSign() != 50 || f.getGradeToExecute() != 25)
             {
-                std::cerr << "  -> FAIL: Attributes mismatch" << std::endl;
+                std::cerr << "  " << BRIGHT_RED << "-> FAIL: Attributes mismatch" << RESET << std::endl;
                 passed = false;
                 all_passed = false;
             }
         }
         catch (const std::exception &e)
         {
-            std::cerr << "  -> FAIL: Unexpected exception: " << e.what() << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Unexpected exception: " << e.what() << RESET << std::endl;
             passed = false;
             all_passed = false;
         }
@@ -405,16 +413,17 @@ int main(void)
         try
         {
             Form f("Bad", 0, 50);
-            std::cerr << "  -> FAIL: Expected GradeTooHighException" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Expected GradeTooHighException" << RESET << std::endl;
             all_passed = false;
         }
-        catch (const Form::GradeTooHighException &)
+        catch (const Form::GradeTooHighException &e)
         {
+            std::cout << "  " << BRIGHT_YELLOW << "[Expected Exception Caught]: " << e.what() << RESET << std::endl;
             passed = true;
         }
         catch (...)
         {
-            std::cerr << "  -> FAIL: Wrong exception type" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Wrong exception type" << RESET << std::endl;
             all_passed = false;
         }
         if (passed)
@@ -429,16 +438,17 @@ int main(void)
         try
         {
             Form f("Bad", 151, 50);
-            std::cerr << "  -> FAIL: Expected GradeTooLowException" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Expected GradeTooLowException" << RESET << std::endl;
             all_passed = false;
         }
-        catch (const Form::GradeTooLowException &)
+        catch (const Form::GradeTooLowException &e)
         {
+            std::cout << "  " << BRIGHT_YELLOW << "[Expected Exception Caught]: " << e.what() << RESET << std::endl;
             passed = true;
         }
         catch (...)
         {
-            std::cerr << "  -> FAIL: Wrong exception type" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Wrong exception type" << RESET << std::endl;
             all_passed = false;
         }
         if (passed)
@@ -453,16 +463,17 @@ int main(void)
         try
         {
             Form f("Bad", 50, 0);
-            std::cerr << "  -> FAIL: Expected GradeTooHighException" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Expected GradeTooHighException" << RESET << std::endl;
             all_passed = false;
         }
-        catch (const Form::GradeTooHighException &)
+        catch (const Form::GradeTooHighException &e)
         {
+            std::cout << "  " << BRIGHT_YELLOW << "[Expected Exception Caught]: " << e.what() << RESET << std::endl;
             passed = true;
         }
         catch (...)
         {
-            std::cerr << "  -> FAIL: Wrong exception type" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Wrong exception type" << RESET << std::endl;
             all_passed = false;
         }
         if (passed)
@@ -477,16 +488,17 @@ int main(void)
         try
         {
             Form f("Bad", 50, 151);
-            std::cerr << "  -> FAIL: Expected GradeTooLowException" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Expected GradeTooLowException" << RESET << std::endl;
             all_passed = false;
         }
-        catch (const Form::GradeTooLowException &)
+        catch (const Form::GradeTooLowException &e)
         {
+            std::cout << "  " << BRIGHT_YELLOW << "[Expected Exception Caught]: " << e.what() << RESET << std::endl;
             passed = true;
         }
         catch (...)
         {
-            std::cerr << "  -> FAIL: Wrong exception type" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Wrong exception type" << RESET << std::endl;
             all_passed = false;
         }
         if (passed)
@@ -501,16 +513,17 @@ int main(void)
         try
         {
             Form f("Extreme", INT_MAX, 50);
-            std::cerr << "  -> FAIL: Expected GradeTooLowException" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Expected GradeTooLowException" << RESET << std::endl;
             all_passed = false;
         }
-        catch (const Form::GradeTooLowException &)
+        catch (const Form::GradeTooLowException &e)
         {
+            std::cout << "  " << BRIGHT_YELLOW << "[Expected Exception Caught]: " << e.what() << RESET << std::endl;
             passed = true;
         }
         catch (...)
         {
-            std::cerr << "  -> FAIL: Wrong exception type" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Wrong exception type" << RESET << std::endl;
             all_passed = false;
         }
         if (passed)
@@ -537,14 +550,14 @@ int main(void)
             f.beSigned(b);
             if (!f.isSigned())
             {
-                std::cerr << "  -> FAIL: Form should be signed" << std::endl;
+                std::cerr << "  " << BRIGHT_RED << "-> FAIL: Form should be signed" << RESET << std::endl;
                 passed = false;
                 all_passed = false;
             }
         }
         catch (const std::exception &e)
         {
-            std::cerr << "  -> FAIL: Unexpected exception: " << e.what() << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Unexpected exception: " << e.what() << RESET << std::endl;
             passed = false;
             all_passed = false;
         }
@@ -564,14 +577,14 @@ int main(void)
             f.beSigned(b);
             if (!f.isSigned())
             {
-                std::cerr << "  -> FAIL: Form should be signed" << std::endl;
+                std::cerr << "  " << BRIGHT_RED << "-> FAIL: Form should be signed" << RESET << std::endl;
                 passed = false;
                 all_passed = false;
             }
         }
         catch (const std::exception &e)
         {
-            std::cerr << "  -> FAIL: Unexpected exception: " << e.what() << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Unexpected exception: " << e.what() << RESET << std::endl;
             passed = false;
             all_passed = false;
         }
@@ -589,14 +602,15 @@ int main(void)
         try
         {
             f.beSigned(b);
-            std::cerr << "  -> FAIL: Expected GradeTooLowException" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Expected GradeTooLowException" << RESET << std::endl;
             all_passed = false;
         }
-        catch (const Form::GradeTooLowException &)
+        catch (const Form::GradeTooLowException &e)
         {
+            std::cout << "  " << BRIGHT_YELLOW << "[Expected Exception Caught]: " << e.what() << RESET << std::endl;
             if (f.isSigned())
             {
-                std::cerr << "  -> FAIL: Form should NOT be signed" << std::endl;
+                std::cerr << "  " << BRIGHT_RED << "-> FAIL: Form should NOT be signed" << RESET << std::endl;
                 all_passed = false;
             }
             else
@@ -606,7 +620,7 @@ int main(void)
         }
         catch (...)
         {
-            std::cerr << "  -> FAIL: Wrong exception type" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Wrong exception type" << RESET << std::endl;
             all_passed = false;
         }
         if (passed)
@@ -626,14 +640,14 @@ int main(void)
             f.beSigned(b);
             if (!f.isSigned())
             {
-                std::cerr << "  -> FAIL: Form should remain signed" << std::endl;
+                std::cerr << "  " << BRIGHT_RED << "-> FAIL: Form should remain signed" << RESET << std::endl;
                 passed = false;
                 all_passed = false;
             }
         }
         catch (const std::exception &e)
         {
-            std::cerr << "  -> FAIL: Unexpected exception on second sign: " << e.what() << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Unexpected exception on second sign: " << e.what() << RESET << std::endl;
             passed = false;
             all_passed = false;
         }
@@ -653,14 +667,14 @@ int main(void)
             f.beSigned(b);
             if (!f.isSigned())
             {
-                std::cerr << "  -> FAIL: Form should be signed" << std::endl;
+                std::cerr << "  " << BRIGHT_RED << "-> FAIL: Form should be signed" << RESET << std::endl;
                 passed = false;
                 all_passed = false;
             }
         }
         catch (const std::exception &e)
         {
-            std::cerr << "  -> FAIL: Unexpected exception: " << e.what() << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Unexpected exception: " << e.what() << RESET << std::endl;
             passed = false;
             all_passed = false;
         }
@@ -678,16 +692,17 @@ int main(void)
         try
         {
             f.beSigned(b);
-            std::cerr << "  -> FAIL: Expected GradeTooLowException" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Expected GradeTooLowException" << RESET << std::endl;
             all_passed = false;
         }
-        catch (const Form::GradeTooLowException &)
+        catch (const Form::GradeTooLowException &e)
         {
+            std::cout << "  " << BRIGHT_YELLOW << "[Expected Exception Caught]: " << e.what() << RESET << std::endl;
             passed = true;
         }
         catch (...)
         {
-            std::cerr << "  -> FAIL: Wrong exception type" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Wrong exception type" << RESET << std::endl;
             all_passed = false;
         }
         if (passed)
@@ -713,7 +728,7 @@ int main(void)
         b.signForm(f);
         if (!f.isSigned())
         {
-            std::cerr << "  -> FAIL: Form should be signed" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Form should be signed" << RESET << std::endl;
             passed = false;
             all_passed = false;
         }
@@ -732,7 +747,7 @@ int main(void)
         b.signForm(f);
         if (f.isSigned())
         {
-            std::cerr << "  -> FAIL: Form should NOT be signed" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Form should NOT be signed" << RESET << std::endl;
             passed = false;
             all_passed = false;
         }
@@ -752,7 +767,7 @@ int main(void)
         low.signForm(f);
         if (f.isSigned())
         {
-            std::cerr << "  -> FAIL: Form should not be signed by low grade" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Form should not be signed by low grade" << RESET << std::endl;
             passed = false;
             all_passed = false;
         }
@@ -760,7 +775,7 @@ int main(void)
         high.signForm(f);
         if (!f.isSigned())
         {
-            std::cerr << "  -> FAIL: Form should be signed by high grade" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Form should be signed by high grade" << RESET << std::endl;
             passed = false;
             all_passed = false;
         }
@@ -785,7 +800,7 @@ int main(void)
         Form copy(original);
         if (copy.getName() != original.getName() || copy.isSigned() != original.isSigned() || copy.getGradeToSign() != original.getGradeToSign() || copy.getGradeToExecute() != original.getGradeToExecute())
         {
-            std::cerr << "  -> FAIL: Copy does not match original" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Copy does not match original" << RESET << std::endl;
             passed = false;
             all_passed = false;
         }
@@ -804,7 +819,7 @@ int main(void)
         Form copy(original);
         if (!copy.isSigned())
         {
-            std::cerr << "  -> FAIL: Copy of signed form should be signed" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Copy of signed form should be signed" << RESET << std::endl;
             passed = false;
             all_passed = false;
         }
@@ -822,7 +837,7 @@ int main(void)
         b = a;
         if (b.getName() != "Alpha" || b.getGradeToSign() != 10 || b.getGradeToExecute() != 20)
         {
-            std::cerr << "  -> FAIL: Assignment failed" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Assignment failed" << RESET << std::endl;
             passed = false;
             all_passed = false;
         }
@@ -842,7 +857,7 @@ int main(void)
 
         if (f.getName() != "Self" || f.getGradeToSign() != 50 || f.getGradeToExecute() != 30)
         {
-            std::cerr << "  -> FAIL: Self-assignment corrupted object" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Self-assignment corrupted object" << RESET << std::endl;
             passed = false;
             all_passed = false;
         }
@@ -861,13 +876,13 @@ int main(void)
         copy.beSigned(b);
         if (original.isSigned())
         {
-            std::cerr << "  -> FAIL: Original should NOT be signed" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Original should NOT be signed" << RESET << std::endl;
             passed = false;
             all_passed = false;
         }
         if (!copy.isSigned())
         {
-            std::cerr << "  -> FAIL: Copy should be signed" << std::endl;
+            std::cerr << "  " << BRIGHT_RED << "-> FAIL: Copy should be signed" << RESET << std::endl;
             passed = false;
             all_passed = false;
         }

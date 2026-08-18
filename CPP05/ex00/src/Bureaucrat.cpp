@@ -38,6 +38,7 @@ Bureaucrat::~Bureaucrat(void)
 		<< m_name << RESET << std::endl;
 }
 
+/* Parameterized Constructor */
 Bureaucrat::Bureaucrat(const std::string &name, int grade) :
 	m_name(name), m_grade(grade)
 {
@@ -53,6 +54,7 @@ Bureaucrat::Bureaucrat(const std::string &name, int grade) :
 		<< m_name << RESET << std::endl;
 }
 
+/* Getters */
 const std::string &Bureaucrat::getName(void) const
 {
 	return (this->m_name);
@@ -63,6 +65,7 @@ int Bureaucrat::getGrade(void) const
 	return (this->m_grade);
 }
 
+/* Modifiers */
 void Bureaucrat::incrementGrade(void)
 {
 	if (this->m_grade <= HIGHEST_GRADE)
@@ -81,6 +84,7 @@ void Bureaucrat::decrementGrade(void)
 	++this->m_grade;
 }
 
+/* Exceptions */
 const char *Bureaucrat::GradeTooHighException::what(void) const throw()
 {
 	return ("Bureaucrat exception: grade too high!");
