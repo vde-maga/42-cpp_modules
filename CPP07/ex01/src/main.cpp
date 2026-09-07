@@ -57,7 +57,6 @@ std::ostream &operator<<(std::ostream &os, const CustomType &ct)
 	return os;
 }
 
-
 namespace TestUI
 {
 	void printHeader(const std::string &title)
@@ -73,7 +72,6 @@ namespace TestUI
 		std::cout << BRIGHT_RED << "[FAIL]" << RESET << " " << msg << std::endl;
 	}
 }
-
 
 void test_basic_non_const()
 {
@@ -150,14 +148,15 @@ void test_custom_type()
 	}
 }
 
-void test_defensive_edge_cases() {
+void test_defensive_edge_cases()
+{
 	TestUI::printHeader("Defensive Edge Cases (Null & Zero Length)");
-	
+
 	int valid_arr[] = {1, 2, 3};
 
-	::iter(static_cast<int*>(NULL), 3, incrementElement<int>);
+	::iter(static_cast<int *>(NULL), 3, incrementElement<int>);
 	::iter(valid_arr, 0, incrementElement<int>);
-	::iter(static_cast<int*>(NULL), 0, incrementElement<int>);
+	::iter(static_cast<int *>(NULL), 0, incrementElement<int>);
 
 	TestUI::printPass("Handled NULL and 0-length gracefully (No UB/Crash)");
 }
