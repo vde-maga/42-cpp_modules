@@ -1,0 +1,23 @@
+#include "../include/RPN.hpp"
+
+int main(int argc, char **argv)
+{
+    if (argc != 2)
+    {
+        std::cerr << "Usage: ./RPN \"8 9 * 9 - 9 - 9 - 4 - 1 +\"" << std::endl;
+        return 1;
+    }
+
+    try
+    {
+        RPN rpn(argv[1]);
+        rpn.run();
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << std::endl;
+        return 1;
+    }
+
+    return 0;
+}
