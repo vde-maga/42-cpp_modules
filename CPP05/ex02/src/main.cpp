@@ -264,6 +264,8 @@ int main()
 {
     std::cout << BOLD YELLOW << "STARTING EX02 DESTRUCTIVE TEST SUITE" << RESET << std::endl;
 
+    std::srand(std::time(NULL));
+
     testOrthodoxCanonicalForm();
     testSuccessfulExecutions();
     testUnsignedFormExecution();

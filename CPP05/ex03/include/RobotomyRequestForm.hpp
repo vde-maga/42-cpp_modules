@@ -2,11 +2,12 @@
 # define ROBOTOMYREQUESTFORM_HPP
 
 # include "AForm.hpp"
+# include <ctime>
+# include <cstdlib>
 
 class RobotomyRequestForm : public AForm
 {
   private:
-	static unsigned int _seed;
 	virtual void executeAction(void) const;
 
   public:

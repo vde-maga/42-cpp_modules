@@ -4,6 +4,8 @@
 #include "../include/Colors.hpp"
 #include <iostream>
 #include <string>
+# include <ctime>
+# include <cstdlib>
 
 static void print_header(const std::string &title)
 {
@@ -170,6 +172,8 @@ static void test_polymorphism_with_intern(void)
 
 int main(void)
 {
+    std::srand(std::time(NULL));
+
     test_make_form_valid();
     test_make_form_invalid();
     test_case_sensitivity();

@@ -43,8 +43,6 @@ RobotomyRequestForm::RobotomyRequestForm(const std::string &target) :
 
 void RobotomyRequestForm::executeAction(void) const
 {
-	std::srand(std::time(NULL));
-
 	std::cout << YELLOW << "* BZZZZZ... DRILLING NOISES... *\n" << RESET;
 
 	if (rand() % 2)
