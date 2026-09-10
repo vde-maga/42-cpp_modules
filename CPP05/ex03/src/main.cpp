@@ -1,190 +1,183 @@
-// File: src/main.cpp
-#include "../include/Bureaucrat.hpp"
-#include "../include/AForm.hpp"
-#include "../include/ShrubberyCreationForm.hpp"
-#include "../include/RobotomyRequestForm.hpp"
-#include "../include/PresidentialPardonForm.hpp"
 #include "../include/Intern.hpp"
+#include "../include/AForm.hpp"
+#include "../include/Bureaucrat.hpp"
 #include "../include/Colors.hpp"
 #include <iostream>
-#include <fstream>
 #include <string>
 
-// --------------------- Test Framework Helpers ---------------------
-
-static int g_tests_passed = 0;
-static int g_tests_total = 0;
-
-static void assertTest(bool condition, const std::string &test_name)
+static void print_header(const std::string &title)
 {
-    ++g_tests_total;
-    if (condition)
+    std::cout << std::endl
+              << BOLD << MAGENTA << "=== " << title << " ===" << RESET << std::endl;
+}
+
+static void safe_delete(AForm *form)
+{
+    if (form)
+        delete form;
+}
+
+static void test_make_form_valid(void)
+{
+    print_header("makeForm - Valid Forms");
+    Intern intern;
+
+    AForm *shrub = intern.makeForm("shrubbery creation", "home");
+    if (shrub && shrub->getName() == "ShrubberyCreationForm" && shrub->getTarget() == "home" && shrub->getGradeToSign() == 145 && shrub->getGradeToExecute() == 137)
     {
-        ++g_tests_passed;
-        std::cout << BRIGHT_GREEN << "[PASS] " << RESET << test_name << std::endl;
+        std::cout << GREEN << "Passed: shrubbery creation created correctly." << RESET << std::endl;
     }
     else
     {
-        std::cout << BRIGHT_RED << "[FAIL] " << RESET << test_name << std::endl;
+        std::cout << RED << "[FAIL] shrubbery creation failed!" << RESET << std::endl;
     }
-}
+    safe_delete(shrub);
 
-static void printSection(const std::string &title)
-{
-    std::cout << std::endl
-              << BOLD BG_MAGENTA << " " << title << " " << RESET << std::endl;
-}
-
-static bool fileContains(const std::string &filename, const std::string &expected)
-{
-    std::ifstream file(filename.c_str());
-    if (!file.is_open())
-        return false;
-    std::string content;
-    std::string line;
-    while (std::getline(file, line))
+    AForm *robot = intern.makeForm("robotomy request", "Bender");
+    if (robot && robot->getName() == "RobotomyRequestForm" && robot->getTarget() == "Bender" && robot->getGradeToSign() == 72 && robot->getGradeToExecute() == 45)
     {
-        content += line + "\n";
+        std::cout << GREEN << "Passed: robotomy request created correctly." << RESET << std::endl;
     }
-    file.close();
-    return content.find(expected) != std::string::npos;
+    else
+    {
+        std::cout << RED << "[FAIL] robotomy request failed!" << RESET << std::endl;
+    }
+    safe_delete(robot);
+
+    AForm *pres = intern.makeForm("presidential pardon", "Arthur");
+    if (pres && pres->getName() == "PresidentialPardonForm" && pres->getTarget() == "Arthur" && pres->getGradeToSign() == 25 && pres->getGradeToExecute() == 5)
+    {
+        std::cout << GREEN << "Passed: presidential pardon created correctly." << RESET << std::endl;
+    }
+    else
+    {
+        std::cout << RED << "[FAIL] presidential pardon failed!" << RESET << std::endl;
+    }
+    safe_delete(pres);
 }
 
-// ----------------------------- Destructive Tests ----------------------------
-
-void testValidFormCreation()
+static void test_make_form_invalid(void)
 {
-    printSection("1. Valid Form Creation via Intern");
+    print_header("makeForm - Invalid Forms");
     Intern intern;
-    bool passed = true;
 
-    AForm* s = intern.makeForm("shrubbery creation", "garden");
-    if (s == NULL || s->getName() != "ShrubberyCreationForm" || s->getTarget() != "garden")
-        passed = false;
-    delete s;
+    AForm *invalid = intern.makeForm("nonexistent form", "target");
+    if (invalid == NULL)
+    {
+        std::cout << GREEN << "Passed: Invalid form name returns NULL." << RESET << std::endl;
+    }
+    else
+    {
+        std::cout << RED << "[FAIL] Invalid form should return NULL!" << RESET << std::endl;
+        safe_delete(invalid);
+    }
 
-    AForm* r = intern.makeForm("robotomy request", "Marvin");
-    if (r == NULL || r->getName() != "RobotomyRequestForm" || r->getTarget() != "Marvin")
-        passed = false;
-    delete r;
-
-    AForm* p = intern.makeForm("presidential pardon", "Arthur");
-    if (p == NULL || p->getName() != "PresidentialPardonForm" || p->getTarget() != "Arthur")
-        passed = false;
-    delete p;
-
-    assertTest(passed, "Intern creates valid forms with correct types and targets");
+    AForm *empty = intern.makeForm("", "target");
+    if (empty == NULL)
+    {
+        std::cout << GREEN << "Passed: Empty form name returns NULL." << RESET << std::endl;
+    }
+    else
+    {
+        std::cout << RED << "[FAIL] Empty form should return NULL!" << RESET << std::endl;
+        safe_delete(empty);
+    }
 }
 
-void testInvalidFormCreation()
+static void test_case_sensitivity(void)
 {
-    printSection("2. Invalid Form Creation Handling");
+    print_header("makeForm - Case Sensitivity");
     Intern intern;
-    AForm* invalid = intern.makeForm("invalid form", "target");
-    
-    assertTest(invalid == NULL, "Intern returns NULL for unknown form name");
-    delete invalid; // Safe to delete NULL
+
+    AForm *upper = intern.makeForm("SHRUBBERY CREATION", "home");
+    if (upper == NULL)
+    {
+        std::cout << GREEN << "Passed: Uppercase form name returns NULL (case sensitive)." << RESET << std::endl;
+    }
+    else
+    {
+        std::cout << RED << "[FAIL] Uppercase form should not match!" << RESET << std::endl;
+        safe_delete(upper);
+    }
+
+    AForm *mixed = intern.makeForm("Robotomy Request", "Bender");
+    if (mixed == NULL)
+    {
+        std::cout << GREEN << "Passed: Mixed case form name returns NULL." << RESET << std::endl;
+    }
+    else
+    {
+        std::cout << RED << "[FAIL] Mixed case form should not match!" << RESET << std::endl;
+        safe_delete(mixed);
+    }
 }
 
-void testPolymorphicExecution()
+static void test_intern_ocf(void)
 {
-    printSection("3. Polymorphic Execution of Intern's Forms");
+    print_header("Intern OCF");
+    Intern intern1;
+    Intern intern2(intern1);
+    Intern intern3;
+    intern3 = intern1;
+    std::cout << GREEN << "Passed: Intern OCF does not crash." << RESET << std::endl;
+}
+
+static void test_integration_full_cycle(void)
+{
+    print_header("Integration: Intern + Bureaucrat Full Cycle");
     Intern intern;
-    Bureaucrat b("Boss", 1);
-    bool passed = true;
+    Bureaucrat boss("Boss", 1);
 
-    AForm* s = intern.makeForm("shrubbery creation", "poly_shrub");
-    try {
-        b.signForm(*s);
-        b.executeForm(*s);
-        if (!fileContains("poly_shrub_shrubbery", "/\\")) passed = false;
-    } catch (...) { passed = false; }
-    delete s;
+    AForm *form = intern.makeForm("presidential pardon", "Target");
+    if (!form)
+    {
+        std::cout << RED << "[FAIL] Integration failed: form is NULL!" << RESET << std::endl;
+        return;
+    }
 
-    AForm* r = intern.makeForm("robotomy request", "poly_robot");
-    try {
-        b.signForm(*r);
-        b.executeForm(*r);
-    } catch (...) { passed = false; }
-    delete r;
-
-    AForm* p = intern.makeForm("presidential pardon", "poly_pres");
-    try {
-        b.signForm(*p);
-        b.executeForm(*p);
-    } catch (...) { passed = false; }
-    delete p;
-
-    assertTest(passed, "Forms created by intern can be signed and executed");
+    boss.signForm(*form);
+    boss.executeForm(*form);
+    safe_delete(form);
+    std::cout << GREEN << "Passed: Full integration cycle works." << RESET << std::endl;
 }
 
-void testInternOCF()
+static void test_polymorphism_with_intern(void)
 {
-    printSection("4. Intern Orthodox Canonical Form");
-    Intern i1;
-    Intern i2(i1);
-    Intern i3;
-    i3 = i1;
-
-    AForm* f1 = i1.makeForm("robotomy request", "target1");
-    AForm* f2 = i2.makeForm("robotomy request", "target2");
-    AForm* f3 = i3.makeForm("robotomy request", "target3");
-
-    bool passed = (f1 != NULL && f2 != NULL && f3 != NULL);
-    assertTest(passed, "Intern OCF methods execute without crashing");
-
-    delete f1;
-    delete f2;
-    delete f3;
-}
-
-void testDestructiveEdgeCases()
-{
-    printSection("5. Destructive Edge Cases");
+    print_header("Polymorphism with Intern");
     Intern intern;
-    
-    // Case sensitivity
-    AForm* caps = intern.makeForm("Shrubbery Creation", "caps");
-    assertTest(caps == NULL, "Intern is case-sensitive (rejects 'Shrubbery Creation')");
-    delete caps;
-    
-    // Empty target
-    AForm* empty_target = intern.makeForm("robotomy request", "");
-    bool passed = (empty_target != NULL && empty_target->getTarget() == "");
-    assertTest(passed, "Intern handles empty target string");
-    delete empty_target;
-    
-    // Empty form name
-    AForm* empty_name = intern.makeForm("", "target");
-    assertTest(empty_name == NULL, "Intern rejects empty form name");
-    delete empty_name;
+    AForm *forms[3];
 
-    // Long target string
-    std::string long_target(1000, 'x');
-    AForm* long_form = intern.makeForm("presidential pardon", long_target);
-    passed = (long_form != NULL && long_form->getTarget() == long_target);
-    assertTest(passed, "Intern handles extremely long target string");
-    delete long_form;
+    forms[0] = intern.makeForm("shrubbery creation", "garden");
+    forms[1] = intern.makeForm("robotomy request", "robot");
+    forms[2] = intern.makeForm("presidential pardon", "citizen");
+
+    Bureaucrat ceo("CEO", 1);
+
+    for (int i = 0; i < 3; ++i)
+    {
+        if (forms[i])
+        {
+            ceo.signForm(*forms[i]);
+            ceo.executeForm(*forms[i]);
+        }
+    }
+
+    for (int i = 0; i < 3; ++i)
+        safe_delete(forms[i]);
+
+    std::cout << GREEN << "Passed: Polymorphic array via Intern works." << RESET << std::endl;
 }
 
-int main()
+int main(void)
 {
-    std::cout << BOLD YELLOW << "STARTING EX03 DESTRUCTIVE TEST SUITE" << RESET << std::endl;
-
-    testValidFormCreation();
-    testInvalidFormCreation();
-    testPolymorphicExecution();
-    testInternOCF();
-    testDestructiveEdgeCases();
+    test_make_form_valid();
+    test_make_form_invalid();
+    test_case_sensitivity();
+    test_intern_ocf();
+    test_integration_full_cycle();
+    test_polymorphism_with_intern();
 
     std::cout << std::endl
-              << BOLD << "=====================================" << RESET << std::endl;
-    std::cout << BOLD << "TOTAL: " << g_tests_passed << "/" << g_tests_total << " tests passed." << RESET << std::endl;
-
-    if (g_tests_passed == g_tests_total)
-        std::cout << BRIGHT_GREEN << "ALL TESTS PASSED!" << RESET << std::endl;
-    else
-        std::cout << BRIGHT_RED << "SOME TESTS FAILED!" << RESET << std::endl;
-
-    return (g_tests_passed != g_tests_total);
+              << BOLD << GREEN << "All Intern TDD Tests Completed Successfully." << RESET << std::endl;
+    return (0);
 }

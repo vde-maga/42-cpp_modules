@@ -16,7 +16,7 @@ class AForm
 	int m_gradeToExecute;
 	std::string m_target;
 
-	void validateGrade(int grade) const;
+	static void validateGrade(int grade);
 
   protected:
 	virtual void executeAction(void) const = 0;

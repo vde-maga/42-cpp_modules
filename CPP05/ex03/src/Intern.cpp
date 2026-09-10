@@ -24,29 +24,25 @@ AForm *Intern::createPresidentialPardonForm(const std::string &target)
 
 Intern::Intern(void)
 {
-	std::cout << BRIGHT_CYAN << "[Intern] Default constructor called"
-		<< RESET << std::endl;
+	std::cout << BRIGHT_CYAN << "[Intern] Default constructor called" << RESET << std::endl;
 }
 
 Intern::Intern(const Intern &other)
 {
 	(void)other;
-	std::cout << BRIGHT_CYAN << "[Intern] Copy constructor called"
-		<< RESET << std::endl;
+	std::cout << BRIGHT_CYAN << "[Intern] Copy constructor called" << RESET << std::endl;
 }
 
 Intern &Intern::operator=(const Intern &other)
 {
 	(void)other;
-	std::cout << BRIGHT_CYAN << "[Intern] Assignment operator called"
-		<< RESET << std::endl;
+	std::cout << BRIGHT_CYAN << "[Intern] Assignment operator called" << RESET << std::endl;
 	return (*this);
 }
 
 Intern::~Intern(void)
 {
-	std::cout << BRIGHT_RED << "[Intern] Destructor called"
-		<< RESET << std::endl;
+	std::cout << BRIGHT_RED << "[Intern] Destructor called" << RESET << std::endl;
 }
 
 AForm *Intern::makeForm(const std::string &formName,
@@ -58,11 +54,10 @@ AForm *Intern::makeForm(const std::string &formName,
 		AForm		*(*creator)(const std::string &);
 	};
 
-	const FormEntry	forms[] = {
-		{"shrubbery creation", &Intern::createShrubberyCreationForm},
-		{"robotomy request", &Intern::createRobotomyRequestForm},
-		{"presidential pardon", &Intern::createPresidentialPardonForm}
-	};
+	const FormEntry	forms[] = {{"shrubbery creation",
+			&Intern::createShrubberyCreationForm}, {"robotomy request",
+			&Intern::createRobotomyRequestForm}, {"presidential pardon",
+			&Intern::createPresidentialPardonForm}};
 
 	const std::size_t num_forms = sizeof(forms) / sizeof(forms[0]);
 
@@ -70,13 +65,11 @@ AForm *Intern::makeForm(const std::string &formName,
 	{
 		if (forms[i].name == formName)
 		{
-			std::cout << GREEN << "Intern creates " << formName
-				<< RESET << std::endl;
+			std::cout << GREEN << "Intern creates " << formName << RESET << std::endl;
 			return (forms[i].creator(target));
 		}
 	}
 
-	std::cerr << RED << "Error: Intern could not find form '" << formName
-		<< "'" << RESET << std::endl;
+	std::cerr << RED << "Error: Intern could not find form '" << formName << "'" << RESET << std::endl;
 	return (NULL);
 }
