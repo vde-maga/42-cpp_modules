@@ -5,12 +5,12 @@
 # include <iostream>
 # include <string>
 
-class	Form;
+class Form;
 
 class Bureaucrat
 {
   private:
-	std::string m_name;
+	const std::string m_name;
 	int m_grade;
 
   public:

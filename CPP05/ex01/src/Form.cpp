@@ -1,9 +1,6 @@
+#include "../include/Form.hpp"
 #include "../include/Bureaucrat.hpp"
 #include "../include/Colors.hpp"
-#include "../include/Form.hpp"
-
-const int Form::HIGHEST_GRADE;
-const int Form::LOWEST_GRADE;
 
 /* Orthodox Canonical Form */
 Form::Form(void) :
@@ -29,10 +26,7 @@ Form &Form::operator=(const Form &original)
 
 	if (this != &original)
 	{
-		this->m_name = original.m_name;
 		this->m_isSigned = original.m_isSigned;
-		this->m_gradeToSign = original.m_gradeToSign;
-		this->m_gradeToExecute = original.m_gradeToExecute;
 	}
 	return (*this);
 }
@@ -48,8 +42,8 @@ Form::Form(const std::string &name, int gradeToSign, int gradeToExecute):
 	m_name(name), m_isSigned(false), m_gradeToSign(gradeToSign),
 	m_gradeToExecute(gradeToExecute)
 {
-	validateGrade(gradeToSign);
-	validateGrade(gradeToExecute);
+	Form::validateGrade(gradeToSign);
+	Form::validateGrade(gradeToExecute);
 	
 	std::cout << BRIGHT_CYAN << "[Form] Parameterized constructor called for "
 		<< m_name << RESET << std::endl;
@@ -86,7 +80,7 @@ void Form::beSigned(const Bureaucrat &bureaucrat)
 	this->m_isSigned = true;
 }
 
-void Form::validateGrade(int grade) const
+void Form::validateGrade(int grade)
 {
 	if (grade < HIGHEST_GRADE)
 	{

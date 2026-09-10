@@ -1,9 +1,6 @@
 #include "../include/Bureaucrat.hpp"
-#include "../include/Colors.hpp"
 #include "../include/Form.hpp"
-
-const int Bureaucrat::HIGHEST_GRADE;
-const int Bureaucrat::LOWEST_GRADE;
+#include "../include/Colors.hpp"
 
 /* Orthodox Canonical Form */
 Bureaucrat::Bureaucrat(void) :
@@ -27,7 +24,6 @@ Bureaucrat &Bureaucrat::operator=(const Bureaucrat &original)
 
 	if (this != &original)
 	{
-		this->m_name = original.m_name;
 		this->m_grade = original.m_grade;
 	}
 	return (*this);
@@ -88,14 +84,12 @@ void Bureaucrat::signForm(Form &form) const
 	try
 	{
 		form.beSigned(*this);
-		std::cout << GREEN << this->m_name << " signed "
-			<< form.getName() << RESET << std::endl;
+		std::cout << this->m_name << " signed " << form.getName() << std::endl;
 	}
 	catch (const std::exception &e)
 	{
-		std::cout << RED << this->m_name << " couldn't sign "
-			<< form.getName() << " because "
-			<< e.what() << RESET << std::endl;
+		std::cout << this->m_name << " couldn't sign " << form.getName()
+			<< " because " << e.what() << std::endl;
 	}
 }
 
@@ -111,7 +105,6 @@ const char *Bureaucrat::GradeTooLowException::what(void) const throw()
 
 std::ostream &operator<<(std::ostream &stream, const Bureaucrat &b)
 {
-	stream << b.getName() << ", bureaucrat grade "
-		<< b.getGrade();
+	stream << b.getName() << ", bureaucrat grade " << b.getGrade();
 	return (stream);
 }

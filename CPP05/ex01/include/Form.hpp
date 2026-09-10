@@ -5,17 +5,17 @@
 # include <iostream>
 # include <string>
 
-class	Bureaucrat;
+class Bureaucrat;
 
 class Form
 {
   private:
-	std::string m_name;
+	const std::string m_name;
 	bool m_isSigned;
-	int m_gradeToSign;
-	int m_gradeToExecute;
+	const int m_gradeToSign;
+	const int m_gradeToExecute;
 
-	void validateGrade(int grade) const;
+	static void validateGrade(int grade);
 
   public:
 	/* Orthodox Canonical Form */
